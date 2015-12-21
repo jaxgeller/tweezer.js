@@ -85,9 +85,16 @@ moveLeft.begin()
 ```es6
 let div = document.querySelector('div')
 let revealed = new Tweenzy({ start: 0, end: 250})
+revealed.on('tick', val => div.style.height = `${val}px`)
 
+let hasFired = false;
 window.addEventListener('scroll', ()=> {
+  let rect = div.getBoundingClientRect()
 
+  if (rect.top < 0 && !hasFired) {
+    revealed.begin()
+    hasFired = true;
+  }
 })
 ```
 
