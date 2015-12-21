@@ -1,0 +1,19 @@
+{
+  "name": "tweenzy",
+  "version": "1.0.0",
+  "description": "A simple utility to easily create performant tweening.",
+  "author": "@jaxgeller",
+  "license": "MIT",
+  "main": "dist/tweenzy.js",
+  "scripts": {
+    "dev": "watchify -t [ babelify --presets [ es2015] ]  -o dist/tweenzy.js -s Tweenzy src/tweenzy.js",
+    "release": "browserify -t [ babelify --presets [ es2015] ] -t uglifyify -o dist/tweenzy.js -s Tweenzy src/tweenzy.js"
+  },
+  "devDependencies": {
+    "babel-preset-es2015": "^6.3.13",
+    "babelify": "^7.2.0",
+    "browserify": "^12.0.1",
+    "uglifyify": "^3.0.1",
+    "watchify": "^3.6.1"
+  }
+}
