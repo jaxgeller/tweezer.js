@@ -19,12 +19,10 @@ var Tweenzy = (function () {
     this.ease = opts.easing || this._defaultEase;
     this.start = opts.start;
     this.end = opts.end;
+
     this.next = null;
-
     this.isRunning = false;
-
     this.events = {};
-
     this.direction = this.start < this.end ? 'up' : 'down';
   }
 
@@ -62,8 +60,6 @@ var Tweenzy = (function () {
       if (!this.timeStart) this.timeStart = currentTime;
       this.timeElapsed = currentTime - this.timeStart;
       this.next = Math.round(this.ease(this.timeElapsed, this.start, this.end - this.start, this.duration));
-
-      this.emit('tick', this.next);
 
       if (this._shouldTick()) {
         this.emit('tick', this.next);

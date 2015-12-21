@@ -17,10 +17,10 @@ let div = document.querySelector('div')
 // create new instance
 
 let animatedHeight = new Tweenzy({
-  duration: 1000,         // in ms
+  duration: 1000,         // in ms, defaults to 1000ms
   start: 0,               // the start tween value
   end: 1000,              // end tween value
-  ease: ease-in-out-quad  // pass in easing function, see details below
+  ease: ease-in-out-quad  // optional, pass in easing function, defaults to ease-in-out-quad
 })
 
 // attach to the emmiter
