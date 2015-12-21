@@ -2,32 +2,6 @@
 
 A simple utility to easily create performant tweening.
 
-### Installation
-
-##### Npm
-
-Add it to your `package.json`, and make sure to load it in using a module loader like browserify or webpack.
-
-```shell
-$   npm install tweenzy --save
-```
-
-##### Bower
-
-Install via the bower commandline tool
-
-```shell
-$   bower install tweenzy
-```
-
-##### Script
-
-Download the dist folder and copy this to your HTML
-
-```html
-<script src="dist/tweenzy.min.js"></script>
-```
-
 ### Usage
 
 + Create a new instance
@@ -54,6 +28,32 @@ animatedHeight.on('tick', val => div.style.height = `${val}px`)
 
 // begin the tweening
 animatedHeight.begin()
+```
+
+### Installation
+
+##### Npm
+
+Add it to your `package.json`, and make sure to load it in using a module loader like browserify or webpack.
+
+```shell
+$   npm install tweenzy --save
+```
+
+##### Bower
+
+Install via the bower commandline tool
+
+```shell
+$   bower install tweenzy
+```
+
+##### Script
+
+Download the dist folder and copy this to your HTML
+
+```html
+<script src="dist/tweenzy.min.js"></script>
 ```
 
 ### Examples
