@@ -20,13 +20,15 @@ var Tweenzy = (function () {
     this.start = opts.start;
     this.end = opts.end;
 
+    this.isRunning = false;
+
     this.events = {};
   }
 
   _createClass(Tweenzy, [{
     key: 'begin',
     value: function begin() {
-      requestAnimationFrame(this._tick.bind(this));
+      if (!this.isRunning) requestAnimationFrame(this._tick.bind(this));
     }
   }, {
     key: 'on',
@@ -38,6 +40,8 @@ var Tweenzy = (function () {
   }, {
     key: '_tick',
     value: function _tick(currentTime) {
+      this.isRunning = true;
+
       if (!this.timeStart) this.timeStart = currentTime;
       this.timeElapsed = currentTime - this.timeStart;
       var next = Math.round(this.ease(this.timeElapsed, this.start, this.end - this.start, this.duration));
@@ -62,6 +66,7 @@ var Tweenzy = (function () {
 })();
 
 exports.default = Tweenzy;
+module.exports = exports['default'];
 
 },{}]},{},[1])(1)
 });

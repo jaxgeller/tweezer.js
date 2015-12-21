@@ -5,11 +5,14 @@ export default class Tweenzy {
     this.start = opts.start;
     this.end = opts.end;
 
+    this.isRunning = false;
+
     this.events = {};
   }
 
   begin() {
-    requestAnimationFrame(this._tick.bind(this));
+    if (!this.isRunning)
+      requestAnimationFrame(this._tick.bind(this));
   }
 
   on(name, handler) {
@@ -19,6 +22,8 @@ export default class Tweenzy {
   }
 
   _tick(currentTime) {
+    this.isRunning = true;
+
     if(!this.timeStart) this.timeStart = currentTime;
     this.timeElapsed = currentTime - this.timeStart;
     let next = Math.round(this.ease(this.timeElapsed, this.start, this.end - this.start, this.duration));

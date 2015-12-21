@@ -6,10 +6,12 @@
   "license": "MIT",
   "main": "dist/tweenzy.js",
   "scripts": {
-    "dev": "watchify -t [ babelify --presets [ es2015] ]  -o dist/tweenzy.js -s Tweenzy src/tweenzy.js",
-    "release": "browserify -t [ babelify --presets [ es2015] ] -t uglifyify -o dist/tweenzy.js -s Tweenzy src/tweenzy.js"
+    "watch": "",
+    "build": "browserify -t [ babelify --presets [ es2015 ] --plugins [ add-module-exports ] ] -s Tweenzy src/tweenzy.js > dist/tweenzy.js",
+    "serve": "python -m http.server"
   },
   "devDependencies": {
+    "babel-plugin-add-module-exports": "^0.1.2",
     "babel-preset-es2015": "^6.3.13",
     "babelify": "^7.2.0",
     "browserify": "^12.0.1",

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tweenzy Demo</title>
+</head>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+  }
+  #animate-height {
+    height: 50px;
+    background-color: red;
+    width: 250px;
+  }
+
+  #count-up {
+    padding: 20px;
+  }
+
+  #move-across-screen {
+    height: 250px;
+    background-color: blue;
+    width: 50px;
+  }
+</style>
+<body>
+  <button id="animate-height-button">Animate Height</button>
+  <div id="animate-height"></div>
+
+  <button id="count-up-button">Count Up</button>
+  <div id="count-up">0</div>
+
+  <button id="move-across-screen-button">Move Across Screen</button>
+  <div id="move-across-screen"></div>
+
+
+
+
+  <script src="dist/tweenzy.min.js"></script>
+  <script>
+
+    var animatedHeight = document.querySelector('#animate-height')
+    var animateHeightButton = document.querySelector('#animate-height-button')
+    var t = new Tweenzy.default({
+      start: animatedHeight.getBoundingClientRect().height,
+      end: animatedHeight.getBoundingClientRect().height * 2
+    })
+    t.on('tick', function(v) {
+      animatedHeight.style.height = v +'px';
+    })
+    animateHeightButton.onclick = function(){t.begin()}
+
+  </script>
+</body>
+</html>
