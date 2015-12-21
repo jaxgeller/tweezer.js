@@ -38,19 +38,46 @@
 
 
 
-  <script src="dist/tweenzy.min.js"></script>
+  <script src="dist/tweenzy.js"></script>
   <script>
 
     var animatedHeight = document.querySelector('#animate-height')
     var animateHeightButton = document.querySelector('#animate-height-button')
-    var t = new Tweenzy.default({
+    var a = new Tweenzy.default({
       start: animatedHeight.getBoundingClientRect().height,
-      end: animatedHeight.getBoundingClientRect().height * 2
+      end: animatedHeight.getBoundingClientRect().height * 3
     })
-    t.on('tick', function(v) {
-      animatedHeight.style.height = v +'px';
+    .on('tick', function(v) {
+      animatedHeight.style.height = v +'px'
     })
-    animateHeightButton.onclick = function(){t.begin()}
+    .on('done', function() {
+      console.log('end')
+    })
+    animateHeightButton.onclick = function(){a.begin()}
+
+
+    var countUp = document.querySelector('#count-up')
+    var countUpButton = document.querySelector('#count-up-button')
+    var c = new Tweenzy.default({
+      start: 0,
+      end: 123456
+    })
+    c.on('tick', function(v) {
+      countUp.textContent = v
+    })
+    countUpButton.onclick = function(){c.begin()}
+
+
+    var moveAcrossScreen = document.querySelector('#move-across-screen')
+    var moveAcrossScreenButton = document.querySelector('#move-across-screen-button')
+    var m = new Tweenzy.default({
+      start: moveAcrossScreen.getBoundingClientRect().left,
+      end: window.innerWidth - moveAcrossScreen.getBoundingClientRect().width
+    })
+    m.on('tick', function(v) {
+      moveAcrossScreen.style.transform = 'translateX('+v +'px)'
+    })
+    moveAcrossScreenButton.onclick = function(){m.begin()}
 
   </script>
 </body>

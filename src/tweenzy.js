@@ -4,15 +4,19 @@ export default class Tweenzy {
     this.ease = opts.easing || this._defaultEase;
     this.start = opts.start;
     this.end = opts.end;
+    this.next = null;
 
     this.isRunning = false;
 
     this.events = {};
+
+    this.direction = this.start < this.end ? 'up' : 'down'
   }
 
   begin() {
-    if (!this.isRunning)
+    if (!this.isRunning && this.next !== this.end) {
       requestAnimationFrame(this._tick.bind(this));
+    }
   }
 
   on(name, handler) {
@@ -21,22 +25,36 @@ export default class Tweenzy {
     return this;
   }
 
+  emit(name, val) {
+    let e = this.events[name];
+    if (e) {
+      e.forEach(handler=> handler.call(this, val));
+    }
+  }
+
   _tick(currentTime) {
-    this.isRunning = true;
+    this.isRunning = true
 
     if(!this.timeStart) this.timeStart = currentTime;
     this.timeElapsed = currentTime - this.timeStart;
-    let next = Math.round(this.ease(this.timeElapsed, this.start, this.end - this.start, this.duration));
+    this.next = Math.round(this.ease(this.timeElapsed, this.start, this.end - this.start, this.duration));
 
-    this.events['tick'][0].call(this, next)
+    this.emit('tick', this.next);
 
-    if (this.end < this.start) {
-      if (next > this.end)
-        return requestAnimationFrame(this._tick.bind(this));
+    if (this._shouldTick()) {
+      this.emit('tick', this.next);
+      return requestAnimationFrame(this._tick.bind(this))
     } else {
-      if (next < this.end)
-        return requestAnimationFrame(this._tick.bind(this));
+      this.emit('done', null)
+      this.isRunning = false;
     }
+  }
+
+  _shouldTick() {
+    return {
+      up: this.next < this.end,
+      down: this.next > this.end
+    }[this.direction];
   }
 
   _defaultEase(t, b, c, d) {
