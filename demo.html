@@ -44,6 +44,28 @@
 
   <script src="dist/tweenzy.js"></script>
   <script>
+    var altEaseDemo = function (t, b, c, d) {
+
+      if ((t/=d) < (1/2.75)) {
+        return c*(7.5625*t*t) + b;
+
+      } else if (t < (2/2.75)) {
+        return c*(7.5625*(t-=(1.5/2.75))*t + .75) + b;
+
+      } else if (t < (2.5/2.75)) {
+        return c*(7.5625*(t-=(2.25/2.75))*t + .9375) + b;
+
+      } else {
+        return c*(7.5625*(t-=(2.625/2.75))*t + .984375) + b;
+      }
+    }
+
+    var altEaseDemo2 = function(t, b, c, d) {
+      if (t==0) return b;
+      if (t==d) return b+c;
+      if ((t/=d/2) < 1) return c/2 * Math.pow(2, 10 * (t - 1)) + b;
+      return c/2 * (-Math.pow(2, -10 * --t) + 2) + b;
+    }
 
     var animatedHeight = document.querySelector('#animate-height')
     var animateHeightButton = document.querySelector('#animate-height-button')
@@ -64,7 +86,8 @@
     var countUpButton = document.querySelector('#count-up-button')
     var c = new Tweenzy.default({
       start: 0,
-      end: 123456
+      end: 123456,
+      easing: altEaseDemo2
     })
     c.on('tick', function(v) {
       countUp.textContent = v
@@ -76,7 +99,8 @@
     var moveAcrossScreenButton = document.querySelector('#move-across-screen-button')
     var m = new Tweenzy.default({
       start: moveAcrossScreen.getBoundingClientRect().left,
-      end: window.innerWidth - moveAcrossScreen.getBoundingClientRect().width
+      end: window.innerWidth - moveAcrossScreen.getBoundingClientRect().width,
+      easing: altEaseDemo
     })
     m.on('tick', function(v) {
       moveAcrossScreen.style.transform = 'translateX('+v +'px)'
