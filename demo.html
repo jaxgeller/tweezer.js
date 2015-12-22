@@ -86,7 +86,7 @@
     var jump = document.querySelector('#jump-button')
     var j = new Tweenzy.default({
       start: window.scrollY,
-      end: 2000 - window.innerHeight
+      end: document.body.clientHeight - window.innerHeight
     }).on('tick', function(v) {
       window.scrollTo(0, v);
     })
