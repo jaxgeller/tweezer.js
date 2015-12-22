@@ -8,6 +8,7 @@
   body {
     margin: 0;
     padding: 0;
+    height: 2000px;
   }
   #animate-height {
     height: 50px;
@@ -29,13 +30,16 @@
   <button id="animate-height-button">Animate Height</button>
   <div id="animate-height"></div>
 
+
   <button id="count-up-button">Count Up</button>
   <div id="count-up">0</div>
+
 
   <button id="move-across-screen-button">Move Across Screen</button>
   <div id="move-across-screen"></div>
 
 
+  <button id="jump-button">Jump Down</button>
 
 
   <script src="dist/tweenzy.js"></script>
@@ -78,6 +82,17 @@
       moveAcrossScreen.style.transform = 'translateX('+v +'px)'
     })
     moveAcrossScreenButton.onclick = function(){m.begin()}
+
+    var jump = document.querySelector('#jump-button')
+    var j = new Tweenzy.default({
+      start: window.scrollY,
+      end: 2000 - window.innerHeight
+    }).on('tick', function(v) {
+      window.scrollTo(0, v);
+    })
+    jump.onclick = function() {
+      j.begin();
+    }
 
   </script>
 </body>
