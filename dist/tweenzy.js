@@ -46,11 +46,9 @@ var Tweenzy = (function () {
       var _this = this;
 
       var e = this.events[name];
-      if (e) {
-        e.forEach(function (handler) {
-          return handler.call(_this, val);
-        });
-      }
+      e && e.forEach(function (handler) {
+        return handler.call(_this, val);
+      });
     }
   }, {
     key: '_tick',
@@ -60,9 +58,9 @@ var Tweenzy = (function () {
       if (!this.timeStart) this.timeStart = currentTime;
       this.timeElapsed = currentTime - this.timeStart;
       this.next = Math.round(this.ease(this.timeElapsed, this.start, this.end - this.start, this.duration));
+      this.emit('tick', this.next);
 
       if (this._shouldTick()) {
-        this.emit('tick', this.next);
         return requestAnimationFrame(this._tick.bind(this));
       } else {
         this.emit('done', null);

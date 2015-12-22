@@ -25,9 +25,7 @@ export default class Tweenzy {
 
   emit(name, val) {
     let e = this.events[name];
-    if (e) {
-      e.forEach(handler=> handler.call(this, val));
-    }
+    e && e.forEach(handler=> handler.call(this, val));
   }
 
   _tick(currentTime) {
@@ -36,9 +34,9 @@ export default class Tweenzy {
     if(!this.timeStart) this.timeStart = currentTime;
     this.timeElapsed = currentTime - this.timeStart;
     this.next = Math.round(this.ease(this.timeElapsed, this.start, this.end - this.start, this.duration));
+    this.emit('tick', this.next);
 
     if (this._shouldTick()) {
-      this.emit('tick', this.next);
       return requestAnimationFrame(this._tick.bind(this))
     } else {
       this.emit('done', null)
