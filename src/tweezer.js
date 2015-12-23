@@ -1,4 +1,4 @@
-export default class Tweenzy {
+export default class Tweezer {
   constructor(opts = {}) {
     this.duration = opts.duration || 1000;
     this.ease = opts.easing || this._defaultEase;

@@ -1,14 +1,14 @@
 {
-  "name": "tweenzy",
+  "name": "tweezer.js",
   "version": "1.0.0",
   "description": "A simple utility to easily create performant tweening.",
   "author": "@jaxgeller",
   "license": "MIT",
-  "main": "dist/tweenzy.js",
+  "main": "dist/tweezer.js",
   "scripts": {
-    "watch": "",
-    "build": "browserify -t [ babelify --presets [ es2015 ] --plugins [ add-module-exports ] ] -s Tweenzy src/tweenzy.js > dist/tweenzy.js",
-    "serve": "python -m http.server"
+    "server": "python -m SimpleHTTPServer",
+    "build": "watchify -t [ babelify --presets [ es2015 ] ] -s Tweezer -o dist/tweezer.js src/tweezer.js",
+    "release": "browserify -t [ babelify --presets [ es2015 ] ] -t uglifyify  -s Tweezer -o dist/tweezer.min.js src/tweezer.js "
   },
   "devDependencies": {
     "babel-plugin-add-module-exports": "^0.1.2",

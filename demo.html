@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Tweenzy Demo</title>
+  <title>Tweezer Demo</title>
 </head>
 <style>
   body {
@@ -42,7 +42,7 @@
   <button id="jump-button">Jump Down</button>
 
 
-  <script src="dist/tweenzy.js"></script>
+  <script src="dist/tweezer.js"></script>
   <script>
     var altEaseDemo = function (t, b, c, d) {
 
@@ -69,7 +69,7 @@
 
     var animatedHeight = document.querySelector('#animate-height')
     var animateHeightButton = document.querySelector('#animate-height-button')
-    var a = new Tweenzy.default({
+    var a = new Tweezer.default({
       start: animatedHeight.getBoundingClientRect().height,
       end: animatedHeight.getBoundingClientRect().height * 3
     })
@@ -84,7 +84,7 @@
 
     var countUp = document.querySelector('#count-up')
     var countUpButton = document.querySelector('#count-up-button')
-    var c = new Tweenzy.default({
+    var c = new Tweezer.default({
       start: 0,
       end: 123456,
       easing: altEaseDemo2
@@ -97,7 +97,7 @@
 
     var moveAcrossScreen = document.querySelector('#move-across-screen')
     var moveAcrossScreenButton = document.querySelector('#move-across-screen-button')
-    var m = new Tweenzy.default({
+    var m = new Tweezer.default({
       start: moveAcrossScreen.getBoundingClientRect().left,
       end: window.innerWidth - moveAcrossScreen.getBoundingClientRect().width,
       easing: altEaseDemo
@@ -108,15 +108,16 @@
     moveAcrossScreenButton.onclick = function(){m.begin()}
 
     var jump = document.querySelector('#jump-button')
-    var j = new Tweenzy.default({
-      start: window.scrollY,
-      end: document.body.clientHeight - window.innerHeight
-    }).on('tick', function(v) {
-      window.scrollTo(0, v);
-    })
     jump.onclick = function() {
-      j.begin();
+      new Tweezer.default({
+        start: window.scrollY,
+        end: document.body.clientHeight - window.innerHeight
+      }).on('tick', function(v) {
+        window.scrollTo(0, v);
+      }).begin()
     }
+
+
 
   </script>
 </body>
