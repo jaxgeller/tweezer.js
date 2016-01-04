@@ -1,121 +1,168 @@
-# Tweenzy.js
+# Tweezer.js
 
-A simple utility to easily create performant tweening.
+[![Tweezer.js on NPM](https://img.shields.io/npm/v/tweezer.js.svg)](https://www.npmjs.com/package/tweezer.js)
 
-### Usage
+A tiny, modern, dependency-free tweening utility. [Demo](http://jaxgeller.com/work/tweezer.js/)
 
-+ Create a new instance
-+ Specify options
-+ Attach to the emitter
-+ Run the tween
+## What is tweening?
+
+A tween is when you animate something with some kind of [easing(http://easings.net/). Any time you want to animate something smoothly with JS, you need to tween it. For example, you can tween count-up-buttons, smooth scrolling, and the height of elements. Instead of requiring libraries for all of these same functions, you can use this library as a utility to build out these examples.
+
+## Usage
+
+Tweezer was developed with a modern JavaScript workflow in mind. To use it, it's recommended you have a build system in place that can transpile ES6, and bundle modules. For a minimal boilerplate that fulfills those requirements, check out [outset](https://github.com/callmecavs/outset).
+
+Follow these steps to get started:
+
+* [Install](#install)
+* [Instantiate](#instantiate)
+* [Tweezer](#tweezer)
+
+### Install
+
+Using NPM, install Tweezer.js, and add it to your package.json dependencies.
+
+```bash
+$ npm install tweezer.js --save
+```
+
+### Setup
+
+Simply import Tweezer.
 
 ```es6
-import Tweenzy from 'tweenzy'
+// import Tweezer
+import Tweezer from 'tweezer.js'
+```
 
-let div = document.querySelector('div')
+It's recommended that you assign your Jump instance to a variable. One instance can make infinite jumps.
 
-// create new instance
+### Instantiate
 
-let animatedHeight = new Tweenzy({
-  duration: 1000,         // in ms, defaults to 1000ms
-  start: 0,               // the start tween value
-  end: 1000,              // end tween value
-  ease: ease-in-out-quad  // optional, pass in easing function, defaults to ease-in-out-quad
+Two parameters are required to use instantiate the instance
+
+* Start Value
+* End Value
+
+#### Target
+
+To jump to an element, pass a CSS selector as a string.
+
+```es6
+Jump.jump('.selector', {
+  // options...
+})
+```
+
+To scroll from the current position, pass a number of pixels, positive or negative.
+
+```es6
+// down one viewport height
+Jump.jump(window.innerHeight, {
+  // options...
 })
 
-// attach to the emmiter
-animatedHeight.on('tick', val => div.style.height = `${val}px`)
-
-// begin the tweening
-animatedHeight.begin()
+// up 100px
+Jump.jump(-100, {
+  // options...
+})
 ```
 
-### Installation
+#### Options
 
-##### Npm
+Note that **duration is required** for every `jump()`.
 
-Add it to your `package.json`, and make sure to load it in using a module loader like browserify or webpack.
-
-```shell
-$   npm install tweenzy --save
-```
-
-##### Bower
-
-Install via the bower commandline tool
-
-```shell
-$   bower install tweenzy
-```
-
-##### Script
-
-Download the dist folder and copy this to your HTML
-
-```html
-<script src="dist/tweenzy.min.js"></script>
-```
-
-### Examples
-
-These examples will assume you have imported the library as Tweenzy.
-
-##### Animate the height of a div on a button click
+Defaults are shown below, explanation of each option follows.
 
 ```es6
-let div = document.querySelector('div')
-let animatedHeight = new Tweenzy({ start: 0, end: 1000})
-animatedHeight.on('tick', val => div.style.height = `${val}px`)
-
-let button = document.querySelector('button').addEventListener('click', animatedHeight.begin)
-```
-
-##### Move an item across the screen
-
-```es6
-let div = document.querySelector('div')
-let moveLeft = new Tweenzy({ start: 0, end: window.innerWidth})
-moveLeft.on('tick', val => div.style.left = `${val}px`)
-
-moveLeft.begin()
-```
-
-##### Scroll reveal a height of a div
-
-```es6
-let div = document.querySelector('div')
-let revealed = new Tweenzy({ start: 0, end: 250})
-revealed.on('tick', val => div.style.height = `${val}px`)
-
-let hasFired = false;
-window.addEventListener('scroll', ()=> {
-  let rect = div.getBoundingClientRect()
-
-  if (rect.top < 0 && !hasFired) {
-    revealed.begin()
-    hasFired = true;
+Jump.jump('.selector', {
+  duration: /* REQUIRED, no default */,
+  offset: 0,
+  callback: undefined,
+  easing: (t, b, c, d) => {
+    // Robert Penner's easeInOutQuad - http://robertpenner.com/easing/
+    t /= d / 2
+    if(t < 1) return c / 2 * t * t + b
+    t--
+    return -c / 2 * (t * (t - 2) - 1) + b
   }
 })
 ```
 
-### Configuration
+##### duration
 
-##### Base options
+How long the `jump()` takes, in milliseconds.
 
-###### Duration
+```es6
+Jump.jump('.selector', {
+  duration: 1000
+})
+```
 
-The duration in milliseconds of how long the tween should take.
+Or, a function accepting `distance` (in `px`) as an argument, and returning the duration (in milliseconds) as a number.
 
-###### Start
+```es6
+Jump.jump('.selector', {
+  duration: (distance) => Math.abs(distance)
+})
+```
 
-The start value of the tween. For example, if you want to animate a height from 0 to 100, start would be 0.
+##### offset
 
-###### End
+Offset a `jump()`, _only if to an element_, in pixels.
 
-The end value of the tween. For example, if you want to animate a height from 0 to 100, end would be 100.
+Useful for accomodating elements fixed to the top/bottom of the screen.
 
-###### Ease
+```es6
+Jump.jump('.selector', {
+  offset: 100
+})
+```
 
-An easing function that returns the tween values. This can be any easing function that takes in the following parameters in this order: time elapsed, start, difference, duration. You can see examples [here](https://github.com/jaxgeller/ez.js/blob/master/ez.js).
+##### callback
 
-##### Emitter
+Fired after the `jump()` has been completed.
+
+```es6
+Jump.jump('.selector', {
+  callback: () => {
+    console.log('Jump completed!')
+  }
+})
+```
+
+##### easing
+
+Easing function used to transition the `jump()`.
+
+```es6
+Jump.jump('.selector', {
+  easing: (t, b, c, d) => {
+    return c * (t /= d) * t + b
+  }
+})
+```
+
+## Browser Support
+
+Jump depends on the following browser APIs:
+
+* [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame)
+
+Consequently, it supports the following natively:
+
+* Chrome 24+
+* Firefox 23+
+* Safari 6.1+
+* Opera 15+
+* IE 10+
+* iOS Safari 7.1+
+* Android Browser 4.4+
+
+To add support for older browsers, consider including polyfills/shims for the APIs listed above. There are no plans to include any in the library, in the interest of file size.
+
+## License
+
+MIT. © 2015 Michael Cavalea
+
+[![Built With Love](http://forthebadge.com/images/badges/built-with-love.svg)](http://forthebadge.com)
