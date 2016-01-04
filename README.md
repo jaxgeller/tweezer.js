@@ -4,51 +4,62 @@
 
 A small, dependency-free, ES6 library for smooth animations. [Demo](http://jaxgeller.com/tweezer.js/)
 
+## Example
 
-## Usage
+Smooth Scroll to an Element
+```es6
+let button = document.querySelector('#jump-button')
+button.onclick = () => {
+  new Tweezer({
+    start: window.scrollY,
+    end: document.body.clientHeight - window.innerHeight
+  }).on('tick', v => window.scrollTo(0, v)).begin()
+}
+```
+
+## Use
 
 Tweezer was developed with a modern JavaScript workflow in mind. To use it, it's recommended you have a build system in place that can transpile ES6, and bundle modules. For a minimal boilerplate that fulfills those requirements, check out [outset](https://github.com/callmecavs/outset) or the [gh-pages branch](https://github.com/jaxgeller/tweezer.js/tree/gh-pages) of this repo.
 
-To get started, install this library via npm and import it into your main file.
+To get started, follow these steps,
 
-### Install
++ Install and Import
++ Instantiate and Configure
++ Register Events and Fire Animations
 
+### Install and Import
+
+In the commandline
 ```bash
 $ npm install tweezer.js --save
 ```
-
-### Import
+In your ES6 Application
 
 ```es6
 import Tweezer from 'tweezer.js'
 ```
 
-Two parameters are required to use instantiate the instance
-
-* Start Value
-* End Value
-
-#### Target
-
-To jump to an element, pass a CSS selector as a string.
+### Instantiate and Configure
 
 ```es6
-Jump.jump('.selector', {
-  // options...
+let animator = new Tweezer({
+    start: 0,
+    end: 9000
 })
 ```
 
-To scroll from the current position, pass a number of pixels, positive or negative.
+### Usage
+
+Two parameters are required to start Tweezer, a `start` and an `end` value. Tweezer works by emitting values via an event emitter. It is up to you on how to use these values.
+
+#### Target
+
+To tween from 0 to 9000
 
 ```es6
-// down one viewport height
-Jump.jump(window.innerHeight, {
-  // options...
-})
-
-// up 100px
-Jump.jump(-100, {
-  // options...
+new Tweezer({
+  start: 0,
+  end: 9000
 })
 ```
 
