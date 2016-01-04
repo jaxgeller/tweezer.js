@@ -1,6 +1,6 @@
 {
   "name": "tweezer.js",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Tweezer",
   "main": "build/tweezer.js",
   "dependencies": {},
@@ -15,8 +15,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack -d --progress --colors",
-    "release": "webpack",
-    "postinstall": "npm run release"
+    "postinstall": "webpack"
   },
   "repository": {
     "type": "git",
