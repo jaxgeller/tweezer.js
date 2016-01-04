@@ -2,11 +2,9 @@
 
 [![Tweezer.js on NPM](https://img.shields.io/npm/v/tweezer.js.svg)](https://www.npmjs.com/package/tweezer.js)
 
-A tiny, modern, dependency-free tweening utility. [Demo](http://jaxgeller.com/tweezer.js/)
+A small, dependency-free, ES6 library for smooth animations. [Demo](http://jaxgeller.com/tweezer.js/)
 
-## What is tweening?
 
-A tween is when you animate something with some kind of [easing(http://easings.net/). Any time you want to animate something smoothly with JS, you need to tween it. For example, you can tween count-up-buttons, smooth scrolling, and the height of elements. Instead of requiring libraries for all of these same functions, you can use this library as a utility to build out these examples.
 
 ## Usage
 
@@ -163,6 +161,12 @@ To add support for older browsers, consider including polyfills/shims for the AP
 
 ## License
 
-MIT. © 2015 Michael Cavalea
+[MIT](https://github.com/jaxgeller/tweezer.js/blob/master/LICENSE)
 
 [![Built With Love](http://forthebadge.com/images/badges/built-with-love.svg)](http://forthebadge.com)
+
+
+
+## What is tweening?
+
+A tween is when you animate something with some kind of [easing(http://easings.net/). Any time you want to animate something smoothly with JS, you need to tween it. For example, you can tween count-up-buttons, smooth scrolling, and the height of elements. Instead of requiring libraries for all of these same functions, you can use this library as a utility to build out these examples.
