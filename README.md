@@ -2,7 +2,7 @@
 
 [![Tweezer.js on NPM](https://img.shields.io/npm/v/tweezer.js.svg)](https://www.npmjs.com/package/tweezer.js)
 
-A tiny, modern, dependency-free tweening utility. [Demo](http://jaxgeller.com/work/tweezer.js/)
+A tiny, modern, dependency-free tweening utility. [Demo](http://jaxgeller.com/tweezer.js/)
 
 ## What is tweening?
 
