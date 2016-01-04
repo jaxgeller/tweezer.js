@@ -6,16 +6,23 @@
   "dependencies": {},
   "devDependencies": {
     "babel-core": "^6.3.26",
+    "babel-eslint": "^5.0.0-beta6",
     "babel-loader": "^6.2.0",
     "babel-preset-es2015": "^6.3.13",
     "babel-preset-stage-0": "^6.3.13",
+    "standard": "^5.4.1",
     "webpack": "^1.12.9",
     "webpack-dev-server": "^1.14.0"
   },
   "scripts": {
+    "test": "standard src/tweezer.js; exit 0",
     "build": "webpack -d --progress --colors",
     "prepublish": "webpack",
     "postpublish": "rm -rf build"
+  },
+  "standard": {
+    "parser": "babel-eslint",
+    "globals": [ "requestAnimationFrame"]
   },
   "repository": {
     "type": "git",
