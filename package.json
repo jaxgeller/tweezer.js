@@ -1,7 +1,7 @@
 {
   "name": "tweezer.js",
-  "version": "1.1.1",
-  "description": "Tweezer",
+  "version": "1.1.5",
+  "description": "A small, dependency-free, es6 tweening library for smooth animations",
   "main": "build/tweezer.js",
   "dependencies": {},
   "devDependencies": {
@@ -13,16 +13,20 @@
     "webpack-dev-server": "^1.14.0"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack -d --progress --colors",
-    "postinstall": "webpack"
+    "prepublish": "webpack",
+    "postpublish": "rm -rf build"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jaxgeller/tweezer.js.git"
   },
   "keywords": [
-    "tweezer"
+    "tweezer",
+    "smooth scroll",
+    "tween",
+    "counter",
+    "easing"
   ],
   "author": "Jackson Geller <jacksongeller@gmail.com>",
   "license": "MIT",
