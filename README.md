@@ -5,37 +5,23 @@
 A small, dependency-free, ES6 library for smooth animations. [Demo](http://jaxgeller.com/tweezer.js/)
 
 
-
 ## Usage
 
-Tweezer was developed with a modern JavaScript workflow in mind. To use it, it's recommended you have a build system in place that can transpile ES6, and bundle modules. For a minimal boilerplate that fulfills those requirements, check out [outset](https://github.com/callmecavs/outset).
+Tweezer was developed with a modern JavaScript workflow in mind. To use it, it's recommended you have a build system in place that can transpile ES6, and bundle modules. For a minimal boilerplate that fulfills those requirements, check out [outset](https://github.com/callmecavs/outset) or the [gh-pages branch](https://github.com/jaxgeller/tweezer.js/tree/gh-pages) of this repo.
 
-Follow these steps to get started:
-
-* [Install](#install)
-* [Instantiate](#instantiate)
-* [Tweezer](#tweezer)
+To get started, install this library via npm and import it into your main file.
 
 ### Install
-
-Using NPM, install Tweezer.js, and add it to your package.json dependencies.
 
 ```bash
 $ npm install tweezer.js --save
 ```
 
-### Setup
-
-Simply import Tweezer.
+### Import
 
 ```es6
-// import Tweezer
 import Tweezer from 'tweezer.js'
 ```
-
-It's recommended that you assign your Jump instance to a variable. One instance can make infinite jumps.
-
-### Instantiate
 
 Two parameters are required to use instantiate the instance
 
@@ -87,63 +73,9 @@ Jump.jump('.selector', {
 })
 ```
 
-##### duration
-
-How long the `jump()` takes, in milliseconds.
-
-```es6
-Jump.jump('.selector', {
-  duration: 1000
-})
-```
-
-Or, a function accepting `distance` (in `px`) as an argument, and returning the duration (in milliseconds) as a number.
-
-```es6
-Jump.jump('.selector', {
-  duration: (distance) => Math.abs(distance)
-})
-```
-
-##### offset
-
-Offset a `jump()`, _only if to an element_, in pixels.
-
-Useful for accomodating elements fixed to the top/bottom of the screen.
-
-```es6
-Jump.jump('.selector', {
-  offset: 100
-})
-```
-
-##### callback
-
-Fired after the `jump()` has been completed.
-
-```es6
-Jump.jump('.selector', {
-  callback: () => {
-    console.log('Jump completed!')
-  }
-})
-```
-
-##### easing
-
-Easing function used to transition the `jump()`.
-
-```es6
-Jump.jump('.selector', {
-  easing: (t, b, c, d) => {
-    return c * (t /= d) * t + b
-  }
-})
-```
-
 ## Browser Support
 
-Jump depends on the following browser APIs:
+Tweezer.js depends on the following browser APIs:
 
 * [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame)
 
@@ -157,7 +89,7 @@ Consequently, it supports the following natively:
 * iOS Safari 7.1+
 * Android Browser 4.4+
 
-To add support for older browsers, consider including polyfills/shims for the APIs listed above. There are no plans to include any in the library, in the interest of file size.
+To add support for older browsers, consider including [polyfills/shims](https://gist.github.com/paulirish/1579671) for the APIs listed above. There are no plans to include any in the library, in the interest of file size.
 
 ## License
 
