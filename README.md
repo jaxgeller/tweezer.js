@@ -9,6 +9,7 @@ Tweezer.js is the last tweening library you'll ever need. It provides the buildi
 + [Use](https://github.com/jaxgeller/tweezer.js#use)
 + [Examples](https://github.com/jaxgeller/tweezer.js#examples)
 + [Configuration](https://github.com/jaxgeller/tweezer.js#configuration)
++ [What is tweening?](https://github.com/jaxgeller/tweezer.js#what-is-tweening)
 
 ## Use
 
@@ -168,7 +169,6 @@ To add support for older browsers, consider including [polyfills/shims](https://
 [![Built With Love](http://forthebadge.com/images/badges/built-with-love.svg)](http://forthebadge.com)
 
 
-
 ## What is tweening?
 
-A tween is when you animate something with some kind of [easing(http://easings.net/). Any time you want to animate something smoothly with JS, you need to tween it. For example, you can tween count-up-buttons, smooth scrolling, and the height of elements. Instead of requiring libraries for all of these same functions, you can use this library as a utility to build out these examples.
+A tween is when you animate something with some kind of [easing](http://easings.net/). Any time you want to animate something smoothly with JS, you need to tween it. For example, you can tween count-up-buttons, smooth scrolling, and the height of elements. Instead of requiring libraries for all of these same functions, you can use this library as a utility to build out these examples.
