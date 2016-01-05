@@ -95,9 +95,9 @@ moveAcrossScreenButton.onclick = ()=> {m.begin()}
 
 ## Configuration
 
-Two parameters are required to start Tweezer, a `start` and an `end` value. Tweezer works by emitting values via an event emitter. It is up to you on how to use these values.
+Two parameters are required to start Tweezer, a `start` and an `end` value. Tweezer works by emitting values via an event emitter. **It is up to you on how to use these values.**
 
-Below are all of the configuration options.
+Below are all of the configuration options. Note: **all methods can be chained.**
 
 #### Options
 Defaults are shown below, explanation of each option follows.
@@ -105,11 +105,11 @@ Defaults are shown below, explanation of each option follows.
 ```es6
 new Tweezer({
     start: 0,
-    end: 5000
-    duration: 2000
+    end: 0,
+    duration: 1000,
     easing: (t, b, c, d) => {
-        if ((t/=d/2) < 1) return c/2*t*t + b
-        return -c/2 * ((--t)*(t-2) - 1) + b
+      if ((t/=d/2) < 1) return c/2*t*t + b
+      return -c/2 * ((--t)*(t-2) - 1) + b
     }
 })
 .on('tick', value => {
@@ -125,24 +125,24 @@ For a list of easings, checkout [ez.js](https://github.com/jaxgeller/ez.js). Jus
 
 #### Using the emitter
 
-To fire the tweening, call `begin()`
+To handle events, use the `.on(handlerName, callback)` method.
 
-```es6
-new Tweezer({start: 0, end: 9000}).begin()
-```
+##### Tick Event
 
-To consume actual tick values, hook into the tick event
-
-```es6
-new Tweezer({start: 0, end: 9000})
-  .on('tick', v => console.log(v))
-```
-
-To consume end tick values, hook into the done event
+This is where you should handle the values returned by tweezer.
 
 ```es6
 new Tweezer({start: 0, end: 9000})
-  .on('done', v => console.log("all done"))
+  .on('tick', v => el.style.transform = `transform3d(v, 0, 0)`)
+```
+
+##### End Event
+
+This event fires when tweening is completed.
+
+```es6
+new Tweezer({start: 0, end: 9000})
+  .on('done', v => alert('All Done!'))
 ```
 
 ## Browser Support
