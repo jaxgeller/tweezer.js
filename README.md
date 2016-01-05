@@ -64,6 +64,33 @@ button.onclick = () => {
 }
 ```
 
+Add a tweened count up button
+
+```es6
+let countUp = document.querySelector('#count-up')
+let countUpButton = document.querySelector('#count-up-button')
+
+let c = new Tweezer({
+  start: 0,
+  end: 123456
+}).on('tick', v=> countUp.textContent = v)
+
+countUpButton.onclick = ()=> {c.begin()}
+```
+
+Move an element across the screen
+
+```es6
+let moveAcrossScreen = document.querySelector('#move-across-screen')
+let moveAcrossScreenButton = document.querySelector('#move-across-screen-button')
+let m = new Tweezer({
+  start: moveAcrossScreen.getBoundingClientRect().left,
+  end: window.innerWidth - moveAcrossScreen.getBoundingClientRect().width
+}).on('tick', v=> moveAcrossScreen.style.transform = 'translateX('+v +'px)')
+
+moveAcrossScreenButton.onclick = ()=> {m.begin()}
+```
+
 ## Configuration
 
 Two parameters are required to start Tweezer, a `start` and an `end` value. Tweezer works by emitting values via an event emitter. It is up to you on how to use these values.
@@ -91,6 +118,8 @@ new Tweezer({
 })
 .begin()
 ```
+
+For a list of easings, checkout [ez.js](https://github.com/jaxgeller/ez.js). Just make sure to implement the four parameters `t, b, c, d`.
 
 #### Using the emitter
 
