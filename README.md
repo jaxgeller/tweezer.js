@@ -21,7 +21,7 @@ button.onclick = () => {
 
 Tweezer was developed with a modern JavaScript workflow in mind. To use it, it's recommended you have a build system in place that can transpile ES6, and bundle modules. For a minimal boilerplate that fulfills those requirements, check out [outset](https://github.com/callmecavs/outset) or the [gh-pages branch](https://github.com/jaxgeller/tweezer.js/tree/gh-pages) of this repo.
 
-To get started, follow these steps,
+To get started, follow these steps, we will create a smooth scroller
 
 + Install and Import
 + Instantiate and Configure
@@ -41,47 +41,70 @@ import Tweezer from 'tweezer.js'
 
 ### Instantiate and Configure
 
+> Only start and end values are required. This will scroll 9000px
+
 ```es6
-let animator = new Tweezer({
+let scroller = new Tweezer({
     start: 0,
     end: 9000
 })
+```
+
+### Register Events and Fire Animations
+
+```es6
+scroller.on('tick', value => window.scrollTo(value))
+scroller.begin()
 ```
 
 ### Usage
 
 Two parameters are required to start Tweezer, a `start` and an `end` value. Tweezer works by emitting values via an event emitter. It is up to you on how to use these values.
 
-#### Target
-
-To tween from 0 to 9000
-
-```es6
-new Tweezer({
-  start: 0,
-  end: 9000
-})
-```
+Below are all of the configuration options.
 
 #### Options
-
-Note that **duration is required** for every `jump()`.
-
 Defaults are shown below, explanation of each option follows.
 
 ```es6
-Jump.jump('.selector', {
-  duration: /* REQUIRED, no default */,
-  offset: 0,
-  callback: undefined,
-  easing: (t, b, c, d) => {
-    // Robert Penner's easeInOutQuad - http://robertpenner.com/easing/
-    t /= d / 2
-    if(t < 1) return c / 2 * t * t + b
-    t--
-    return -c / 2 * (t * (t - 2) - 1) + b
-  }
+new Tweezer({
+    start: 0,
+    end: 5000
+    duration: 2000
+    easing: (t, b, c, d) => {
+        if ((t/=d/2) < 1) return c/2*t*t + b
+        return -c/2 * ((--t)*(t-2) - 1) + b
+    }
 })
+.on('tick', value => {
+    // do something with value
+})
+.on('done', ()=> {
+  // all done
+})
+.begin()
+```
+
+#### Using the emitter
+
+To fire the tweening, call `begin()`
+
+```es6
+new Tweezer({start: 0, end: 9000}).begin()
+```
+
+To consume actual tick values, hook into the tick event
+
+```es6
+new Tweezer({start: 0, end: 9000})
+  .on('tick', v => console.log(v))
+```
+
+To consume end tick values, hook into the done event
+
+```es6
+new Tweezer({start: 0, end: 9000})
+  .on('done', v => console.log("all done"))
 ```
 
 ## Browser Support
