@@ -2,20 +2,11 @@
 
 [![Tweezer.js on NPM](https://img.shields.io/npm/v/tweezer.js.svg)](https://www.npmjs.com/package/tweezer.js)
 
-A small, dependency-free, ES6 library for smooth animations. [Demo](http://jaxgeller.com/tweezer.js/)
+A small, dependency-free, ES6 library for smooth animations. [Demo](http://jaxgeller.com/tweezer.js/).
 
-## Example
-
-Smooth Scroll to an Element
-```es6
-let button = document.querySelector('#jump-button')
-button.onclick = () => {
-  new Tweezer({
-    start: window.scrollY,
-    end: document.body.clientHeight - window.innerHeight
-  }).on('tick', v => window.scrollTo(0, v)).begin()
-}
-```
++ [Use](https://github.com/jaxgeller/tweezer.js#use)
++ [Examples](https://github.com/jaxgeller/tweezer.js#examples)
++ [Configuration](https://github.com/jaxgeller/tweezer.js#configuration)
 
 ## Use
 
@@ -57,7 +48,21 @@ scroller.on('tick', value => window.scrollTo(value))
 scroller.begin()
 ```
 
-### Usage
+## Examples
+
+Smooth Scroll to an Element
+
+```es6
+let button = document.querySelector('#jump-button')
+button.onclick = () => {
+  new Tweezer({
+    start: window.scrollY,
+    end: document.body.clientHeight - window.innerHeight
+  }).on('tick', v => window.scrollTo(0, v)).begin()
+}
+```
+
+## Configuration
 
 Two parameters are required to start Tweezer, a `start` and an `end` value. Tweezer works by emitting values via an event emitter. It is up to you on how to use these values.
 
