@@ -4,7 +4,7 @@
 
 A small, dependency-free, ES6 library for smooth animations. [Demo](http://jaxgeller.com/tweezer.js/).
 
-Tweezer.js is the last tweening library you'll ever need. It provides the building blocks for any animation, allowing you to construct beautiful animations simply. It provides the building blocks, and the rest is up to you. See [examples](https://github.com/jaxgeller/tweezer.js#examples).
+Tweezer.js is the last tweening library you'll ever need. It provides the building blocks for any animation, allowing you to construct beautiful animations simply. With tweezer, you can kiss one-off animation libraries goodbye.
 
 + [Use](https://github.com/jaxgeller/tweezer.js#use)
 + [Examples](https://github.com/jaxgeller/tweezer.js#examples)
