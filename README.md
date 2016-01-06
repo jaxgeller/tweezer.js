@@ -45,21 +45,6 @@ new Tweezer({
 
 ## Examples and Use Cases
 
-##### Smooth Scroll to an Element
-
-```es6
-let button = document.querySelector('#jump-button')
-
-button.onclick = ()=> {
-  new Tweezer({
-    start: window.scrollY,
-    end: document.body.clientHeight - window.innerHeight
-  })
-  .on('tick', v => window.scrollTo(0, v))
-  .begin()
-}
-```
-
 ##### Add a tweened count up button
 
 ```es6
@@ -72,6 +57,21 @@ countUpButton.onclick = ()=> {
     end: 123456
   })
   .on('tick', v=> countUpText.textContent = v)
+  .begin()
+}
+```
+
+##### Smooth Scroll to an Element
+
+```es6
+let button = document.querySelector('#jump-button')
+
+button.onclick = ()=> {
+  new Tweezer({
+    start: window.scrollY,
+    end: document.body.clientHeight - window.innerHeight
+  })
+  .on('tick', v => window.scrollTo(0, v))
   .begin()
 }
 ```
@@ -95,38 +95,69 @@ moverButton.onclick = ()=> {
 ```
 
 ## Configuration
+
 Tweezer only has a couple of options, but these options can be very powerful. Again, only required options to run tweezer are `start` and `end`. And all methods are chainable.
 
-#### Start and End
+### Start and End
+
+```es6
+new Tweezer({
+  start: 0,
+  end: 9000
+})
+```
 
 These are integers that define a start of tween and an end of tween. `start` can be greater than or less than `end` for tweening up and down.
 
+### Easings
 
-For a list of easings, checkout [ez.js](https://github.com/jaxgeller/ez.js). Just make sure to implement the four parameters `t, b, c, d`.
+```es6
+new Tweezer({
+  easing: (t, b, c, d) => {
+    if ((t/=d/2) < 1) return c/2*t*t + b
+    return -c/2 * ((--t)*(t-2) - 1) + b
+  }
+})
+```
 
-#### Using the emitter
+The default easing is `easeInOut`.  If you'd like to add your own easing, implement a function that takes in four parameters: `t, b, c, d` and returns a single integer. For examples of easings, checkout [ez.js](https://github.com/jaxgeller/ez.js).  Parameters explained below.
+
+```
+t: current time,
+b: beginning value,
+c: change in value,
+d: duration
+```
+
+### Using the emitter
 
 To handle events, use the `.on(handlerName, callback)` method.
 
 ##### Tick Event
 
-This is where you should handle the values returned by tweezer.
+This is where you should handle the values returned by tweezer. It will fire every 16ms via `requestAnimationFrame`.
 
 ```es6
-new Tweezer({start: 0, end: 9000})
+new Tweezer({
+  start: 0,
+  end: 9000
+})
   .on('tick', v => el.style.transform = `transform3d(v, 0, 0)`)
 ```
 
 ##### End Event
 
-This event fires when tweening is completed.
+This event fires when tweening has reached the `end` value.
 
 ```es6
-new Tweezer({start: 0, end: 9000})
+new Tweezer({
+  start: 0,
+  end: 9000
+})
   .on('done', v => alert('All Done!'))
 ```
 
-#### Fire the tween
+### Begin the tween
 
 To start tweening, just run the `begin()` method.
 
