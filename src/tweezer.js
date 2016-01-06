@@ -52,7 +52,7 @@ export default class Tweezer {
   }
 
   _defaultEase (t, b, c, d) {
-    if ((t/=d/2) < 1) return c/2*t*t + b
-    return -c/2 * ((--t)*(t-2) - 1) + b
+    if ((t /= d / 2) < 1) return c / 2 * t * t + b
+    return -c / 2 * ((--t) * (t - 2) - 1) + b
   }
 }
