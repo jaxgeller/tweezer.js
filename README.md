@@ -16,14 +16,11 @@ Tweezer.js is the last tweening library you'll ever need. It provides the buildi
 
 Tweezer was developed with a modern JavaScript workflow in mind. To use it, it's recommended you have a build system in place that can transpile ES6, and bundle modules. For a minimal boilerplate that fulfills those requirements, check out [outset](https://github.com/callmecavs/outset) or the [gh-pages branch](https://github.com/jaxgeller/tweezer.js/tree/gh-pages) of this repo.
 
-### Install and Import
+To install, run
 
-In the commandline
 ```bash
 $ npm install tweezer.js --save
 ```
-
-### Instantiate and Configure
 
 Two parameters are required to start Tweezer, a `start` and an `end` value, the rest is optional. Tweezer works by emitting values via an event emitter. **It is up to you on how to use these values.**
 
