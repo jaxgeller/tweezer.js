@@ -6,13 +6,7 @@ A small, dependency-free, ES6 library for smooth animations. [Demo](http://jaxge
 
 Tweezer.js is the last tweening library you'll ever need. It provides the building blocks for any animation, allowing you to construct beautiful animations simply and without the need of requiring lots of other dependencies like smoothScroll, countUp.js, and GSAP.
 
-+ [Use](https://github.com/jaxgeller/tweezer.js#use)
-+ [Examples](https://github.com/jaxgeller/tweezer.js#examples)
-+ [Configuration](https://github.com/jaxgeller/tweezer.js#configuration)
-+ [Browser Support](https://github.com/jaxgeller/tweezer.js#browser-support)
-+ [What is tweening?](https://github.com/jaxgeller/tweezer.js#what-is-tweening)
-
-## Use
+## Install
 
 Tweezer was developed with a modern JavaScript workflow in mind. To use it, it's recommended you have a build system in place that can transpile ES6, and bundle modules. For a minimal boilerplate that fulfills those requirements, check out [outset](https://github.com/callmecavs/outset) or the [gh-pages branch](https://github.com/jaxgeller/tweezer.js/tree/gh-pages) of this repo.
 
@@ -22,7 +16,11 @@ To install, run
 $ npm install tweezer.js --save
 ```
 
+## Use
+
 Two parameters are required to start Tweezer, a `start` and an `end` value, the rest is optional. Tweezer works by emitting values via an event emitter. **It is up to you on how to use these values.**
+
+Tweezer works by tweening from a start to end. Along the way it emits values via the `tick` event. It is in the handler of the `tick` event where you want to do something with the values.
 
 Below are all of the configuration options. Note: **all methods can be chained.**
 
@@ -97,10 +95,7 @@ moverButton.onclick = ()=> {
 ```
 
 ## Configuration
-
-Two parameters are required to start Tweezer, a `start` and an `end` value. Tweezer works by emitting values via an event emitter. **It is up to you on how to use these values.**
-
-Below are all of the configuration options. Note: **all methods can be chained.**
+Tweezer only has a couple of options, but these options can be very powerful. Again, only required options to run tweezer are `start` and `end`. And all methods are chainable.
 
 #### Options
 Defaults are shown below, explanation of each option follows.
