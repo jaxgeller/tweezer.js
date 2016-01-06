@@ -135,26 +135,26 @@ To handle events, use the `.on(handlerName, callback)` method.
 
 ##### Tick Event
 
-This is where you should handle the values returned by tweezer. It will fire every 16ms via `requestAnimationFrame`.
+This is where you'll do the bulk of animation by handling the values return by Tweezer. With these values you can do anything like transforming and manipulating DOM elements.It will fire every 16ms via `requestAnimationFrame`.
 
 ```es6
 new Tweezer({
   start: 0,
   end: 9000
 })
-  .on('tick', v => el.style.transform = `transform3d(v, 0, 0)`)
+.on('tick', v => el.style.transform = `transform3d(v, 0, 0)`)
 ```
 
 ##### End Event
 
-This event fires when tweening has reached the `end` value.
+This event fires when tweening has reached the `end` value.  All tweening is complete when this event is fired.
 
 ```es6
 new Tweezer({
   start: 0,
   end: 9000
 })
-  .on('done', v => alert('All Done!'))
+.on('done', v => alert('All Done!'))
 ```
 
 ### Begin the tween
