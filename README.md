@@ -59,7 +59,7 @@ scroller.begin()
 ```es6
 let button = document.querySelector('#jump-button')
 
-button.onclick = () => {
+button.onclick = ()=> {
   new Tweezer({
     start: window.scrollY,
     end: document.body.clientHeight - window.innerHeight
@@ -87,16 +87,16 @@ countUpButton.onclick = ()=> {
 ##### Move an element across the screen
 
 ```es6
-let moveAcrossScreen = document.querySelector('#move-across-screen')
-let moveAcrossScreenButton = document.querySelector('#move-across-screen-button')
+let mover = document.querySelector('#move-across-screen')
+let moverButton = document.querySelector('#move-across-screen-button')
 
-moveAcrossScreenButton.onclick = ()=> {
+moverButton.onclick = ()=> {
   new Tweezer({
-    start: moveAcrossScreen.getBoundingClientRect().left,
-    end: window.innerWidth - moveAcrossScreen.getBoundingClientRect().width
+    start: mover.getBoundingClientRect().left,
+    end: window.innerWidth - mover.getBoundingClientRect().width
   })
   .on('tick', v=> {
-    moveAcrossScreen.style.transform = `translate3d(${v}px, 0, 0)`
+    mover.style.transform = `translate3d(${v}px, 0, 0)`
   })
 }
 ```
@@ -121,7 +121,7 @@ new Tweezer({
     }
 })
 .on('tick', value => {
-    // do something with value
+  // do something with value
 })
 .on('done', ()=> {
   // all done
