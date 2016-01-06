@@ -54,43 +54,51 @@ scroller.begin()
 
 ## Examples
 
-Smooth Scroll to an Element
+##### Smooth Scroll to an Element
 
 ```es6
 let button = document.querySelector('#jump-button')
+
 button.onclick = () => {
   new Tweezer({
     start: window.scrollY,
     end: document.body.clientHeight - window.innerHeight
-  }).on('tick', v => window.scrollTo(0, v)).begin()
+  })
+  .on('tick', v => window.scrollTo(0, v))
+  .begin()
 }
 ```
 
-Add a tweened count up button
+##### Add a tweened count up button
 
 ```es6
-let countUp = document.querySelector('#count-up')
+let countUpText = document.querySelector('#count-up')
 let countUpButton = document.querySelector('#count-up-button')
 
-let c = new Tweezer({
-  start: 0,
-  end: 123456
-}).on('tick', v=> countUp.textContent = v)
-
-countUpButton.onclick = ()=> {c.begin()}
+countUpButton.onclick = ()=> {
+  new Tweezer({
+    start: 0,
+    end: 123456
+  })
+  .on('tick', v=> countUpText.textContent = v)
+}
 ```
 
-Move an element across the screen
+##### Move an element across the screen
 
 ```es6
 let moveAcrossScreen = document.querySelector('#move-across-screen')
 let moveAcrossScreenButton = document.querySelector('#move-across-screen-button')
-let m = new Tweezer({
-  start: moveAcrossScreen.getBoundingClientRect().left,
-  end: window.innerWidth - moveAcrossScreen.getBoundingClientRect().width
-}).on('tick', v=> moveAcrossScreen.style.transform = 'translateX('+v +'px)')
 
-moveAcrossScreenButton.onclick = ()=> {m.begin()}
+moveAcrossScreenButton.onclick = ()=> {
+  new Tweezer({
+    start: moveAcrossScreen.getBoundingClientRect().left,
+    end: window.innerWidth - moveAcrossScreen.getBoundingClientRect().width
+  })
+  .on('tick', v=> {
+    moveAcrossScreen.style.transform = `translate3d(${v}px, 0, 0)`
+  })
+}
 ```
 
 ## Configuration
