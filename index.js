@@ -9,6 +9,7 @@ let a = new Tweezer({
   end: animatedHeight.getBoundingClientRect().height * 3
 })
 .on('tick', v=> animatedHeight.style.height = v +'px')
+.on('done', ()=> animatedHeight.textContent = "All done!")
 
 animateHeightButton.onclick = function(){a.begin()}
 
@@ -19,14 +20,15 @@ let c = new Tweezer({
   start: 0,
   end: 123456
 }).on('tick', v=> countUp.textContent = v)
+.on('done', ()=> countUpButton.textContent = "All done counting to 123456!")
 countUpButton.onclick = function(){c.begin()}
 
 
 let moveAcrossScreen = document.querySelector('#move-across-screen')
 let moveAcrossScreenButton = document.querySelector('#move-across-screen-button')
 let m = new Tweezer({
-  start: moveAcrossScreen.getBoundingClientRect().left,
-  end: window.innerWidth - moveAcrossScreen.getBoundingClientRect().width,
+  start: 0,
+  end: window.innerWidth - moveAcrossScreen.getBoundingClientRect().left -moveAcrossScreen.getBoundingClientRect().width,
   easing: easeOutBounce
 }).on('tick', v=> moveAcrossScreen.style.transform = 'translateX('+v +'px)')
 

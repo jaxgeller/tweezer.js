@@ -1,0 +1,77 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "roboto";
+  line-height: 1.6;
+}
+
+footer {
+  padding: 80px 40px;
+  background-color: #1f1e38;
+  color: white;
+  text-align: center;
+  margin-top: 900px;
+}
+
+footer a {
+  color: white;
+}
+
+.button {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 10px;
+  transition: opacity ease-in-out .22s;
+  border: 0;
+  outline: 0;
+  background-color: #e8640c;
+  color: white;
+  font-family: "roboto";
+  cursor: pointer;
+}
+
+.button:hover {
+  opacity: .8;
+}
+
+.example {
+  margin-bottom: 80px;
+}
+
+h1 {
+  margin: 0;
+  margin-bottom: 20px;
+}
+
+header {
+  margin-bottom: 80px;
+  padding: 80px 40px;
+  background-color: #1f1e38;
+  color: white;
+  text-align: center;
+}
+
+header span {
+  display: block;
+  opacity: .7;
+}
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+#animate-height {
+  width: 250px;
+  height: 50px;
+  background-color: #ffbf0d;
+  padding: 0 20px;
+}
+#count-up {
+
+}
+#move-across-screen {
+  width: 50px;
+  height: 250px;
+  background-color: #BA0CE8;
+}

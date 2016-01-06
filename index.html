@@ -3,45 +3,53 @@
 <head>
   <meta charset="UTF-8">
   <title>Tweezer.js Demo</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      height: 2000px;
-    }
-    #animate-height {
-      height: 50px;
-      background-color: red;
-      width: 250px;
-    }
-    #count-up {
-      padding: 20px;
-    }
-    #move-across-screen {
-      height: 250px;
-      background-color: blue;
-      width: 50px;
-    }
-  </style>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,500">
+  <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-  <h1>Tweezer Demo</h1>
 
-  <button id="animate-height-button">Animate Height</button>
-  <div id="animate-height"></div>
+  <header>
+    <h1>Tweezer.js</h1>
+    <span>A small, dependency-free, ES6 library for smooth animations.</span>
+  </header>
+
+  <div class="container">
+
+    <div class="info">
+      <p>
+        Tweezer.js provides the building blocks for animations and tweening. <br>
+        With Tweezer, you no longer need to include lots of libraries for one off animations.
+      </p>
+      <p>Source: <a href="https://github.com/jaxgeller/tweezer.js">Github</a></p>
+    </div>
+
+    <h1>Examples</h1>
 
 
-  <button id="count-up-button">Count Up</button>
-  <div id="count-up">0</div>
+    <div class="example">
+      <button class="button" id="animate-height-button">Smooth Height Animation</button>
+      <div id="animate-height">This height will animate</div>
+    </div>
 
+    <div class="example">
+      <button class="button" id="count-up-button">Count Up</button>
+      <div id="count-up">0</div>
+    </div>
 
-  <button id="move-across-screen-button">Move Across Screen</button>
-  <div id="move-across-screen"></div>
+    <div class="example">
+      <button class="button" id="move-across-screen-button">Move Across Screen</button>
+      <div id="move-across-screen"></div>
+    </div>
 
+    <div class="example">
+      <button class="button" id="jump-button">Jump Down</button>
+    </div>
+  </div>
 
-  <button id="jump-button">Jump Down</button>
-
-
+  <footer>
+    <p>Created by Jackson Geller</p>
+    <p>Source: <a href="https://github.com/jaxgeller/tweezer.js">Github</a></p>
+  </footer>
 
   <script src="build.js"></script>
 </body>
