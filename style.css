@@ -6,11 +6,11 @@ body {
 }
 
 footer {
+  margin-top: 900px;
   padding: 80px 40px;
   background-color: #1f1e38;
   color: white;
   text-align: center;
-  margin-top: 900px;
 }
 
 footer a {
@@ -57,21 +57,20 @@ header span {
 }
 
 .container {
-  max-width: 960px;
+  max-width: 1000px;
+  padding: 0 20px;
   margin: 0 auto;
 }
 
 #animate-height {
   width: 250px;
   height: 50px;
-  background-color: #ffbf0d;
   padding: 0 20px;
+  background-color: #ffbf0d;
 }
-#count-up {
 
-}
 #move-across-screen {
   width: 50px;
   height: 250px;
-  background-color: #BA0CE8;
+  background-color: #ba0ce8;
 }

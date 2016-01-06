@@ -61,6 +61,8 @@
 	  end: animatedHeight.getBoundingClientRect().height * 3
 	}).on('tick', function (v) {
 	  return animatedHeight.style.height = v + 'px';
+	}).on('done', function () {
+	  return animatedHeight.textContent = "All done!";
 	});
 
 	animateHeightButton.onclick = function () {
@@ -74,6 +76,8 @@
 	  end: 123456
 	}).on('tick', function (v) {
 	  return countUp.textContent = v;
+	}).on('done', function () {
+	  return countUpButton.textContent = "All done counting to 123456!";
 	});
 	countUpButton.onclick = function () {
 	  c.begin();
@@ -82,8 +86,8 @@
 	var moveAcrossScreen = document.querySelector('#move-across-screen');
 	var moveAcrossScreenButton = document.querySelector('#move-across-screen-button');
 	var m = new _tweezer2.default({
-	  start: moveAcrossScreen.getBoundingClientRect().left,
-	  end: window.innerWidth - moveAcrossScreen.getBoundingClientRect().width,
+	  start: 0,
+	  end: window.innerWidth - moveAcrossScreen.getBoundingClientRect().left - moveAcrossScreen.getBoundingClientRect().width,
 	  easing: _ez.easeOutBounce
 	}).on('tick', function (v) {
 	  return moveAcrossScreen.style.transform = 'translateX(' + v + 'px)';
