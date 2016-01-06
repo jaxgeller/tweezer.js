@@ -1,6 +1,6 @@
 {
   "name": "tweezer.js",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "description": "A small, dependency-free, es6 tweening library for smooth animations",
   "main": "build/tweezer.js",
   "dependencies": {},
