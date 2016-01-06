@@ -4,7 +4,7 @@
 
 A small, dependency-free, ES6 library for smooth animations. [Demo](http://jaxgeller.com/tweezer.js/).
 
-Tweezer.js is the last tweening library you'll ever need. It provides the building blocks for any animation, allowing you to construct beautiful animations simply and without the need of requiring lots of other dependencies like smoothScroll and GSAP.
+Tweezer.js is the last tweening library you'll ever need. It provides the building blocks for any animation, allowing you to construct beautiful animations simply and without the need of requiring lots of other dependencies like smoothScroll, countUp.js, and GSAP.
 
 + [Use](https://github.com/jaxgeller/tweezer.js#use)
 + [Examples](https://github.com/jaxgeller/tweezer.js#examples)
@@ -16,7 +16,7 @@ Tweezer.js is the last tweening library you'll ever need. It provides the buildi
 
 Tweezer was developed with a modern JavaScript workflow in mind. To use it, it's recommended you have a build system in place that can transpile ES6, and bundle modules. For a minimal boilerplate that fulfills those requirements, check out [outset](https://github.com/callmecavs/outset) or the [gh-pages branch](https://github.com/jaxgeller/tweezer.js/tree/gh-pages) of this repo.
 
-To get started, follow these steps, we will create a smooth scroller
+To get started, follow these steps.
 
 + Install and Import
 + Instantiate and Configure
@@ -36,20 +36,27 @@ import Tweezer from 'tweezer.js'
 
 ### Instantiate and Configure
 
-> Only start and end values are required. This will scroll 9000px
+Two parameters are required to start Tweezer, a `start` and an `end` value. Tweezer works by emitting values via an event emitter. **It is up to you on how to use these values.**
+
+Below are all of the configuration options. Note: **all methods can be chained.**
 
 ```es6
-let scroller = new Tweezer({
+new Tweezer({
     start: 0,
-    end: 9000
+    end: 0,
+    duration: 1000,
+    easing: (t, b, c, d) => {
+      if ((t/=d/2) < 1) return c/2*t*t + b
+      return -c/2 * ((--t)*(t-2) - 1) + b
+    }
 })
-```
-
-### Register Events and Fire Animations
-
-```es6
-scroller.on('tick', value => window.scrollTo(value))
-scroller.begin()
+.on('tick', value => {
+  // do something with value
+})
+.on('done', ()=> {
+  // all done
+})
+.begin()
 ```
 
 ## Examples
