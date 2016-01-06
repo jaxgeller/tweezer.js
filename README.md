@@ -45,7 +45,7 @@ new Tweezer({
 
 ## Examples and Use Cases
 
-##### Add a tweened count up button
+##### Add a Tweened Count Up Button
 
 ```es6
 let countUpText = document.querySelector('#count-up')
@@ -76,7 +76,7 @@ button.onclick = ()=> {
 }
 ```
 
-##### Move an element across the screen
+##### Move an Element Across the Screen
 
 ```es6
 let mover = document.querySelector('#move-across-screen')
@@ -129,7 +129,7 @@ c: change in value,
 d: duration
 ```
 
-### Using the emitter
+### Using the Emitter
 
 To handle events, use the `.on(handlerName, callback)` method.
 
@@ -157,7 +157,7 @@ new Tweezer({
 .on('done', v => alert('All Done!'))
 ```
 
-### Begin the tween
+### Begin the Tween
 
 To start tweening, just run the `begin()` method.
 
@@ -179,7 +179,7 @@ Consequently, it supports the following natively:
 
 To add support for older browsers, consider including [polyfills/shims](https://gist.github.com/paulirish/1579671) for the APIs listed above. There are no plans to include any in the library, in the interest of file size.
 
-## What is tweening?
+## What is Tweening?
 
 A tween is when you animate something with some kind of [easing](http://easings.net/). Any time you want to animate something smoothly with JS, you need to tween it. For example, you can tween count-up-buttons, smooth scrolling, and the height of elements. Instead of requiring libraries for all of these same functions, you can use this library as a utility to build out these examples.
 
