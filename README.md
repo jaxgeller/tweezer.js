@@ -18,9 +18,7 @@ $ npm install tweezer.js --save
 
 ## Use
 
-Two parameters are required to start Tweezer, a `start` and an `end` value, the rest is optional. Tweezer works by emitting values via an event emitter. **It is up to you on how to use these values.**
-
-Tweezer works by tweening from a start to end. Along the way it emits values via the `tick` event. It is in the handler of the `tick` event where you want to do something with the values.
+Two parameters are required to start Tweezer, a `start` and an `end` value, the rest is optional. Tweezer works by emitting values from `start` to `end` via the `tick` event. **It is up to you on how to use these values.**
 
 Below are all of the configuration options. Note: **all methods can be chained.**
 
