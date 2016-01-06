@@ -18,9 +18,9 @@ $ npm install tweezer.js --save
 
 ## Use
 
-Two parameters are required to start Tweezer, a `start` and an `end` value, the rest is optional. Tweezer works by emitting values from `start` to `end` via the `tick` event. **It is up to you on how to use these values.**
+Two parameters are required to start Tweezer, a `start` and an `end` value, the rest is optional. Tweezer works by emitting tweened values from `start` to `end` via the `tick` event. **It is up to you on how to use these values.**
 
-Below are all of the configuration options. Note: **all methods can be chained.**
+Below are all of the default configuration options. Note: **all methods can be chained.**
 
 ```es6
 import Tweezer from 'tweezer.js'
@@ -40,7 +40,7 @@ new Tweezer({
 .on('done', ()=> {
   // all done
 })
-.begin()
+.begin() // this fires the tweening
 ```
 
 ## Examples and Use Cases
@@ -72,6 +72,7 @@ countUpButton.onclick = ()=> {
     end: 123456
   })
   .on('tick', v=> countUpText.textContent = v)
+  .begin()
 }
 ```
 
@@ -89,33 +90,17 @@ moverButton.onclick = ()=> {
   .on('tick', v=> {
     mover.style.transform = `translate3d(${v}px, 0, 0)`
   })
+  .begin()
 }
 ```
 
 ## Configuration
 Tweezer only has a couple of options, but these options can be very powerful. Again, only required options to run tweezer are `start` and `end`. And all methods are chainable.
 
-#### Options
-Defaults are shown below, explanation of each option follows.
+#### Start and End
 
-```es6
-new Tweezer({
-    start: 0,
-    end: 0,
-    duration: 1000,
-    easing: (t, b, c, d) => {
-      if ((t/=d/2) < 1) return c/2*t*t + b
-      return -c/2 * ((--t)*(t-2) - 1) + b
-    }
-})
-.on('tick', value => {
-  // do something with value
-})
-.on('done', ()=> {
-  // all done
-})
-.begin()
-```
+These are integers that define a start of tween and an end of tween. `start` can be greater than or less than `end` for tweening up and down.
+
 
 For a list of easings, checkout [ez.js](https://github.com/jaxgeller/ez.js). Just make sure to implement the four parameters `t, b, c, d`.
 
@@ -140,6 +125,10 @@ This event fires when tweening is completed.
 new Tweezer({start: 0, end: 9000})
   .on('done', v => alert('All Done!'))
 ```
+
+#### Fire the tween
+
+To start tweening, just run the `begin()` method.
 
 ## Browser Support
 
