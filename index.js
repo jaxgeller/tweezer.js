@@ -28,21 +28,41 @@ document.querySelector('#animate-height-button').onclick = () => {
 
 
 let countUp = document.querySelector('#count-up')
-let countUpButton = document.querySelector('#count-up-button')
-let c = new Tweezer({
-  start: 0,
-  end: 123456
-}).on('tick', v=> countUp.textContent = v)
-.on('done', ()=> countUpButton.textContent = "All done counting to 123456!")
-countUpButton.onclick = function(){c.begin()}
+let shouldCount = true
+let cIsRunning = false
+function counter(shouldCount) {
+  if (shouldCount)
+    return {start: 0, end: 123456}
+  else
+    return {start: 123456, end: 0}
+}
+document.querySelector('#count-up-button').onclick = ()=> {
+  if (!cIsRunning) {
+    new Tweezer(counter(shouldCount))
+      .on('done', () => {
+        shouldCount = !shouldCount
+        cIsRunning = false
+      })
+      .on('tick', v=> countUp.textContent = v)
+      .begin()
+    cIsRunning = true
+  }
+}
+
 
 
 let moveAcrossScreen = document.querySelector('#move-across-screen')
 let moveAcrossScreenButton = document.querySelector('#move-across-screen-button')
-let m = new Tweezer({
-  start: 0,
-  end: window.innerWidth - moveAcrossScreen.getBoundingClientRect().left -moveAcrossScreen.getBoundingClientRect().width
-}).on('tick', v=> moveAcrossScreen.style.transform = 'translateX('+v +'px)')
+let shouldMove = true
+function move(shouldMove) {
+  if (shouldMove)
+    return {start: 0,end: window.innerWidth - moveAcrossScreen.getBoundingClientRect().left -moveAcrossScreen.getBoundingClientRect().width}
+  else
+    return {end: 0,start: window.innerWidth - moveAcrossScreen.getBoundingClientRect().left -moveAcrossScreen.getBoundingClientRect().width}
+}
+let m = new Tweezer(move(shouldMove))
+.on('tick', v=> moveAcrossScreen.style.transform = 'translateX('+v +'px)')
+.on('done', ()=> {shouldMove = !shouldMove; console.log(shouldMove)})
 
 moveAcrossScreenButton.onclick = function(){m.begin()}
 

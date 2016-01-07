@@ -50,8 +50,6 @@
 
 	var _tweezer2 = _interopRequireDefault(_tweezer);
 
-	var _ez = __webpack_require__(2);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var animatedHeight = document.querySelector('#animate-height');
@@ -77,27 +75,33 @@
 	};
 
 	var countUp = document.querySelector('#count-up');
-	var countUpButton = document.querySelector('#count-up-button');
-	var c = new _tweezer2.default({
-	  start: 0,
-	  end: 123456
-	}).on('tick', function (v) {
-	  return countUp.textContent = v;
-	}).on('done', function () {
-	  return countUpButton.textContent = "All done counting to 123456!";
-	});
-	countUpButton.onclick = function () {
-	  c.begin();
+	var shouldCount = true;
+	var cIsRunning = false;
+	function counter(shouldCount) {
+	  if (shouldCount) return { start: 0, end: 123456 };else return { start: 123456, end: 0 };
+	}
+	document.querySelector('#count-up-button').onclick = function () {
+	  if (!cIsRunning) {
+	    new _tweezer2.default(counter(shouldCount)).on('done', function () {
+	      shouldCount = !shouldCount;
+	      cIsRunning = false;
+	    }).on('tick', function (v) {
+	      return countUp.textContent = v;
+	    }).begin();
+	    cIsRunning = true;
+	  }
 	};
 
 	var moveAcrossScreen = document.querySelector('#move-across-screen');
 	var moveAcrossScreenButton = document.querySelector('#move-across-screen-button');
-	var m = new _tweezer2.default({
-	  start: 0,
-	  end: window.innerWidth - moveAcrossScreen.getBoundingClientRect().left - moveAcrossScreen.getBoundingClientRect().width,
-	  easing: _ez.easeOutBounce
-	}).on('tick', function (v) {
+	var shouldMove = true;
+	function move(shouldMove) {
+	  if (shouldMove) return { start: 0, end: window.innerWidth - moveAcrossScreen.getBoundingClientRect().left - moveAcrossScreen.getBoundingClientRect().width };else return { end: 0, start: window.innerWidth - moveAcrossScreen.getBoundingClientRect().left - moveAcrossScreen.getBoundingClientRect().width };
+	}
+	var m = new _tweezer2.default(move(shouldMove)).on('tick', function (v) {
 	  return moveAcrossScreen.style.transform = 'translateX(' + v + 'px)';
+	}).on('done', function () {
+	  shouldMove = !shouldMove;console.log(shouldMove);
 	});
 
 	moveAcrossScreenButton.onclick = function () {
@@ -186,7 +190,7 @@
 
 		'use strict';
 
-		var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+		var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 		Object.defineProperty(exports, "__esModule", {
 		  value: true
@@ -194,7 +198,7 @@
 
 		function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-		var Tweezer = (function () {
+		var Tweezer = function () {
 		  function Tweezer() {
 		    var opts = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 
@@ -205,6 +209,7 @@
 		    this.start = opts.start;
 		    this.end = opts.end;
 
+		    this.frame = null;
 		    this.next = null;
 		    this.isRunning = false;
 		    this.events = {};
@@ -215,8 +220,19 @@
 		    key: 'begin',
 		    value: function begin() {
 		      if (!this.isRunning && this.next !== this.end) {
-		        requestAnimationFrame(this._tick.bind(this));
+		        this.frame = requestAnimationFrame(this._tick.bind(this));
 		      }
+		      return this;
+		    }
+		  }, {
+		    key: 'stop',
+		    value: function stop() {
+		      cancelAnimationFrame(this.frame);
+		      this.isRunning = false;
+		      this.frame = null;
+		      this.timeStart = null;
+		      this.next = null;
+		      return this;
 		    }
 		  }, {
 		    key: 'on',
@@ -240,25 +256,27 @@
 		    value: function _tick(currentTime) {
 		      this.isRunning = true;
 
+		      var lastTick = this.next || this.start;
+
 		      if (!this.timeStart) this.timeStart = currentTime;
 		      this.timeElapsed = currentTime - this.timeStart;
 		      this.next = Math.round(this.ease(this.timeElapsed, this.start, this.end - this.start, this.duration));
-		      this.emit('tick', this.next);
 
-		      if (this._shouldTick()) {
-		        return requestAnimationFrame(this._tick.bind(this));
+		      if (this._shouldTick(lastTick)) {
+		        this.emit('tick', this.next);
+		        this.frame = requestAnimationFrame(this._tick.bind(this));
 		      } else {
+		        this.emit('tick', this.end);
 		        this.emit('done', null);
-		        this.isRunning = false;
 		      }
 		    }
 		  }, {
 		    key: '_shouldTick',
-		    value: function _shouldTick() {
-		      return ({
-		        up: this.next < this.end,
-		        down: this.next > this.end
-		      })[this.direction];
+		    value: function _shouldTick(lastTick) {
+		      return {
+		        up: this.next < this.end && lastTick <= this.next,
+		        down: this.next > this.end && lastTick >= this.next
+		      }[this.direction];
 		    }
 		  }, {
 		    key: '_defaultEase',
@@ -269,7 +287,7 @@
 		  }]);
 
 		  return Tweezer;
-		})();
+		}();
 
 		exports.default = Tweezer;
 
@@ -277,211 +295,6 @@
 	/******/ ])
 	});
 	;
-
-/***/ },
-/* 2 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var require;var require;(function(f){if(true){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.Ez = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return require(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-	"use strict";
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.easeInQuad = easeInQuad;
-	exports.easeOutQuad = easeOutQuad;
-	exports.easeInOutQuad = easeInOutQuad;
-	exports.easeInCubic = easeInCubic;
-	exports.easeOutCubic = easeOutCubic;
-	exports.easeInOutCubic = easeInOutCubic;
-	exports.easeInQuart = easeInQuart;
-	exports.easeOutQuart = easeOutQuart;
-	exports.easeInOutQuart = easeInOutQuart;
-	exports.easeInQuint = easeInQuint;
-	exports.easeOutQuint = easeOutQuint;
-	exports.easeInOutQuint = easeInOutQuint;
-	exports.easeInSine = easeInSine;
-	exports.easeOutSine = easeOutSine;
-	exports.easeInOutSine = easeInOutSine;
-	exports.easeInExpo = easeInExpo;
-	exports.easeOutExpo = easeOutExpo;
-	exports.easeInOutExpo = easeInOutExpo;
-	exports.easeInCirc = easeInCirc;
-	exports.easeOutCirc = easeOutCirc;
-	exports.easeInOutCirc = easeInOutCirc;
-	exports.easeInElastic = easeInElastic;
-	exports.easeOutElastic = easeOutElastic;
-	exports.easeInOutElastic = easeInOutElastic;
-	exports.easeInBack = easeInBack;
-	exports.easeOutBack = easeOutBack;
-	exports.easeInOutBack = easeInOutBack;
-	exports.easeInBounce = easeInBounce;
-	exports.easeOutBounce = easeOutBounce;
-	exports.easeInOutBounce = easeInOutBounce;
-
-	function easeInQuad(t, b, c, d) {
-	  return c * (t /= d) * t + b;
-	}
-
-	function easeOutQuad(t, b, c, d) {
-	  return -c * (t /= d) * (t - 2) + b;
-	}
-
-	function easeInOutQuad(t, b, c, d) {
-	  if ((t /= d / 2) < 1) return c / 2 * t * t + b;
-	  return -c / 2 * (--t * (t - 2) - 1) + b;
-	}
-
-	function easeInCubic(t, b, c, d) {
-	  return c * (t /= d) * t * t + b;
-	}
-
-	function easeOutCubic(t, b, c, d) {
-	  return c * ((t = t / d - 1) * t * t + 1) + b;
-	}
-
-	function easeInOutCubic(t, b, c, d) {
-	  if ((t /= d / 2) < 1) return c / 2 * t * t * t + b;
-	  return c / 2 * ((t -= 2) * t * t + 2) + b;
-	}
-
-	function easeInQuart(t, b, c, d) {
-	  return c * (t /= d) * t * t * t + b;
-	}
-
-	function easeOutQuart(t, b, c, d) {
-	  return -c * ((t = t / d - 1) * t * t * t - 1) + b;
-	}
-
-	function easeInOutQuart(t, b, c, d) {
-	  if ((t /= d / 2) < 1) return c / 2 * t * t * t * t + b;
-	  return -c / 2 * ((t -= 2) * t * t * t - 2) + b;
-	}
-
-	function easeInQuint(t, b, c, d) {
-	  return c * (t /= d) * t * t * t * t + b;
-	}
-
-	function easeOutQuint(t, b, c, d) {
-	  return c * ((t = t / d - 1) * t * t * t * t + 1) + b;
-	}
-
-	function easeInOutQuint(t, b, c, d) {
-	  if ((t /= d / 2) < 1) return c / 2 * t * t * t * t * t + b;
-	  return c / 2 * ((t -= 2) * t * t * t * t + 2) + b;
-	}
-
-	function easeInSine(t, b, c, d) {
-	  return -c * Math.cos(t / d * (Math.PI / 2)) + c + b;
-	}
-
-	function easeOutSine(t, b, c, d) {
-	  return c * Math.sin(t / d * (Math.PI / 2)) + b;
-	}
-
-	function easeInOutSine(t, b, c, d) {
-	  return -c / 2 * (Math.cos(Math.PI * t / d) - 1) + b;
-	}
-
-	function easeInExpo(t, b, c, d) {
-	  return t == 0 ? b : c * Math.pow(2, 10 * (t / d - 1)) + b;
-	}
-
-	function easeOutExpo(t, b, c, d) {
-	  return t == d ? b + c : c * (-Math.pow(2, -10 * t / d) + 1) + b;
-	}
-
-	function easeInOutExpo(t, b, c, d) {
-	  if (t == 0) return b;
-	  if (t == d) return b + c;
-	  if ((t /= d / 2) < 1) return c / 2 * Math.pow(2, 10 * (t - 1)) + b;
-	  return c / 2 * (-Math.pow(2, -10 * --t) + 2) + b;
-	}
-
-	function easeInCirc(t, b, c, d) {
-	  return -c * (Math.sqrt(1 - (t /= d) * t) - 1) + b;
-	}
-
-	function easeOutCirc(t, b, c, d) {
-	  return c * Math.sqrt(1 - (t = t / d - 1) * t) + b;
-	}
-
-	function easeInOutCirc(t, b, c, d) {
-	  if ((t /= d / 2) < 1) return -c / 2 * (Math.sqrt(1 - t * t) - 1) + b;
-	  return c / 2 * (Math.sqrt(1 - (t -= 2) * t) + 1) + b;
-	}
-
-	function easeInElastic(t, b, c, d) {
-	  var s = 1.70158;var p = 0;var a = c;
-	  if (t == 0) return b;if ((t /= d) == 1) return b + c;if (!p) p = d * .3;
-
-	  if (a < Math.abs(c)) {
-	    a = c;var s = p / 4;
-	  } else var s = p / (2 * Math.PI) * Math.asin(c / a);
-	  return -(a * Math.pow(2, 10 * (t -= 1)) * Math.sin((t * d - s) * (2 * Math.PI) / p)) + b;
-	}
-
-	function easeOutElastic(t, b, c, d) {
-	  var s = 1.70158;var p = 0;var a = c;
-	  if (t == 0) return b;if ((t /= d) == 1) return b + c;if (!p) p = d * .3;
-
-	  if (a < Math.abs(c)) {
-	    a = c;var s = p / 4;
-	  } else var s = p / (2 * Math.PI) * Math.asin(c / a);
-	  return a * Math.pow(2, -10 * t) * Math.sin((t * d - s) * (2 * Math.PI) / p) + c + b;
-	}
-
-	function easeInOutElastic(t, b, c, d) {
-	  var s = 1.70158;var p = 0;var a = c;
-	  if (t == 0) return b;if ((t /= d / 2) == 2) return b + c;if (!p) p = d * (.3 * 1.5);
-
-	  if (a < Math.abs(c)) {
-	    a = c;var s = p / 4;
-	  } else var s = p / (2 * Math.PI) * Math.asin(c / a);
-	  if (t < 1) return -.5 * (a * Math.pow(2, 10 * (t -= 1)) * Math.sin((t * d - s) * (2 * Math.PI) / p)) + b;
-	  return a * Math.pow(2, -10 * (t -= 1)) * Math.sin((t * d - s) * (2 * Math.PI) / p) * .5 + c + b;
-	}
-
-	function easeInBack(t, b, c, d, s) {
-	  if (s == undefined) s = 1.70158;
-	  return c * (t /= d) * t * ((s + 1) * t - s) + b;
-	}
-
-	function easeOutBack(t, b, c, d, s) {
-	  if (s == undefined) s = 1.70158;
-	  return c * ((t = t / d - 1) * t * ((s + 1) * t + s) + 1) + b;
-	}
-
-	function easeInOutBack(t, b, c, d, s) {
-	  if (s == undefined) s = 1.70158;
-	  if ((t /= d / 2) < 1) return c / 2 * (t * t * (((s *= 1.525) + 1) * t - s)) + b;
-	  return c / 2 * ((t -= 2) * t * (((s *= 1.525) + 1) * t + s) + 2) + b;
-	}
-
-	function easeInBounce(t, b, c, d) {
-	  return c - easeOutBounce(d - t, 0, c, d) + b;
-	}
-
-	function easeOutBounce(t, b, c, d) {
-
-	  if ((t /= d) < 1 / 2.75) {
-	    return c * (7.5625 * t * t) + b;
-	  } else if (t < 2 / 2.75) {
-	    return c * (7.5625 * (t -= 1.5 / 2.75) * t + .75) + b;
-	  } else if (t < 2.5 / 2.75) {
-	    return c * (7.5625 * (t -= 2.25 / 2.75) * t + .9375) + b;
-	  } else {
-	    return c * (7.5625 * (t -= 2.625 / 2.75) * t + .984375) + b;
-	  }
-	}
-
-	function easeInOutBounce(t, b, c, d) {
-	  if (t < d / 2) return easeInBounce(t * 2, 0, c, d) * .5 + b;
-	  return easeOutBounce(t * 2 - d, 0, c, d) * .5 + c * .5 + b;
-	}
-
-	},{}]},{},[1])(1)
-	});
 
 /***/ }
 /******/ ]);
