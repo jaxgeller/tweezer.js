@@ -95,17 +95,33 @@
 	var moveAcrossScreen = document.querySelector('#move-across-screen');
 	var moveAcrossScreenButton = document.querySelector('#move-across-screen-button');
 	var shouldMove = true;
+	var isMoving = false;
+	var leftEdge = window.innerWidth - moveAcrossScreen.getBoundingClientRect().left;
 	function move(shouldMove) {
-	  if (shouldMove) return { start: 0, end: window.innerWidth - moveAcrossScreen.getBoundingClientRect().left - moveAcrossScreen.getBoundingClientRect().width };else return { end: 0, start: window.innerWidth - moveAcrossScreen.getBoundingClientRect().left - moveAcrossScreen.getBoundingClientRect().width };
+	  console.log(leftEdge);
+	  if (shouldMove) {
+	    return {
+	      start: 0,
+	      end: leftEdge - moveAcrossScreen.getBoundingClientRect().width
+	    };
+	  } else {
+	    return {
+	      end: 0,
+	      start: parseInt(moveAcrossScreen.style.transform.split('(')[1])
+	    };
+	  }
 	}
-	var m = new _tweezer2.default(move(shouldMove)).on('tick', function (v) {
-	  return moveAcrossScreen.style.transform = 'translateX(' + v + 'px)';
-	}).on('done', function () {
-	  shouldMove = !shouldMove;console.log(shouldMove);
-	});
 
 	moveAcrossScreenButton.onclick = function () {
-	  m.begin();
+	  if (!isMoving) {
+	    var m = new _tweezer2.default(move(shouldMove)).on('tick', function (v) {
+	      return moveAcrossScreen.style.transform = 'translateX(' + v + 'px)';
+	    }).on('done', function () {
+	      shouldMove = !shouldMove;console.log(shouldMove);isMoving = false;
+	    });
+	    m.begin();
+	    isMoving = true;
+	  }
 	};
 
 	var jump = document.querySelector('#jump-button');
