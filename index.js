@@ -35,9 +35,18 @@ let m = new Tweezer({
 moveAcrossScreenButton.onclick = function(){m.begin()}
 
 let jump = document.querySelector('#jump-button')
+let footer = document.querySelector('footer')
 jump.onclick = function() {
   new Tweezer({
     start: window.scrollY,
-    end: document.body.clientHeight - window.innerHeight
+    end: footer.getBoundingClientRect().top + window.scrollY
   }).on('tick', v => window.scrollTo(0, v)).begin()
 }
+
+document.querySelector('#jump-to-top').onclick = function() {
+  new Tweezer({
+    start: window.scrollY,
+    end: 0
+  }).on('tick', v => window.scrollTo(0, v)).begin()
+}
+
