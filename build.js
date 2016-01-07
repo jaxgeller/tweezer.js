@@ -98,7 +98,6 @@
 	var isMoving = false;
 	var leftEdge = window.innerWidth - moveAcrossScreen.getBoundingClientRect().left;
 	function move(shouldMove) {
-	  console.log(leftEdge);
 	  if (shouldMove) {
 	    return {
 	      start: 0,

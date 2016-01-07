@@ -49,15 +49,12 @@ document.querySelector('#count-up-button').onclick = ()=> {
   }
 }
 
-
-
 let moveAcrossScreen = document.querySelector('#move-across-screen')
 let moveAcrossScreenButton = document.querySelector('#move-across-screen-button')
 let shouldMove = true
 let isMoving = false
 let leftEdge = window.innerWidth - moveAcrossScreen.getBoundingClientRect().left
 function move(shouldMove) {
-  console.log(leftEdge)
   if (shouldMove) {
     return {
       start: 0,
@@ -72,9 +69,6 @@ function move(shouldMove) {
   }
 }
 
-
-
-
 moveAcrossScreenButton.onclick = function(){
   if (!isMoving) {
     let m = new Tweezer(move(shouldMove))
@@ -85,20 +79,6 @@ moveAcrossScreenButton.onclick = function(){
   }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 let jump = document.querySelector('#jump-button')
 let footer = document.querySelector('footer')
 jump.onclick = function() {
@@ -107,13 +87,6 @@ jump.onclick = function() {
     end: footer.getBoundingClientRect().top + window.scrollY
   }).on('tick', v => window.scrollTo(0, v)).begin()
 }
-
-
-
-
-
-
-
 
 document.querySelector('#jump-to-top').onclick = function() {
   new Tweezer({
