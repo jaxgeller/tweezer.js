@@ -53,7 +53,6 @@ export default class Tweezer {
       this.frame = requestAnimationFrame(this._tick.bind(this))
     } else {
       this.emit('tick', this.end)
-      this.stop()
       this.emit('done', null)
     }
   }
