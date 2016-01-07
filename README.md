@@ -65,16 +65,20 @@ countUpButton.onclick = ()=> {
 
 ```es6
 let button = document.querySelector('#jump-button')
+let elementYouWantToScrollTo = document.querySelector('#element')
 
 button.onclick = ()=> {
   new Tweezer({
     start: window.scrollY,
-    end: document.body.clientHeight - window.innerHeight
+    end: elementYouWantToScrollTo.getBoundingClientRect().top + window.scrollY
   })
   .on('tick', v => window.scrollTo(0, v))
   .begin()
 }
 ```
+
+`start` is the current scroll position. `end` is set to the top of the element plus the current scroll position,
+which will yield the document Y position of the element.
 
 ##### Move an Element Across the Screen
 
