@@ -73,7 +73,7 @@ moveAcrossScreenButton.onclick = function(){
   if (!isMoving) {
     let m = new Tweezer(move(shouldMove))
     .on('tick', v=> moveAcrossScreen.style.transform = 'translateX('+v +'px)')
-    .on('done', ()=> {shouldMove = !shouldMove; console.log(shouldMove); isMoving = false})
+    .on('done', ()=> {shouldMove = !shouldMove; isMoving = false})
     m.begin()
     isMoving = true
   }

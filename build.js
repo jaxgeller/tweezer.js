@@ -116,7 +116,7 @@
 	    var m = new _tweezer2.default(move(shouldMove)).on('tick', function (v) {
 	      return moveAcrossScreen.style.transform = 'translateX(' + v + 'px)';
 	    }).on('done', function () {
-	      shouldMove = !shouldMove;console.log(shouldMove);isMoving = false;
+	      shouldMove = !shouldMove;isMoving = false;
 	    });
 	    m.begin();
 	    isMoving = true;
