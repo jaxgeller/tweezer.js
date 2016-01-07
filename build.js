@@ -55,18 +55,25 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var animatedHeight = document.querySelector('#animate-height');
-	var animateHeightButton = document.querySelector('#animate-height-button');
-	var a = new _tweezer2.default({
-	  start: animatedHeight.getBoundingClientRect().height,
-	  end: animatedHeight.getBoundingClientRect().height * 3
-	}).on('tick', function (v) {
-	  return animatedHeight.style.height = v + 'px';
-	}).on('done', function () {
-	  return animatedHeight.textContent = "All done!";
-	});
+	var shouldGrow = true;
+	var isRunning = false;
+	function grow(b) {
+	  if (b) return animatedHeight.getBoundingClientRect().height * 3;else return animatedHeight.getBoundingClientRect().height / 3;
+	}
 
-	animateHeightButton.onclick = function () {
-	  a.begin();
+	document.querySelector('#animate-height-button').onclick = function () {
+	  if (!isRunning) {
+	    new _tweezer2.default({
+	      start: animatedHeight.getBoundingClientRect().height,
+	      end: grow(shouldGrow)
+	    }).on('tick', function (v) {
+	      return animatedHeight.style.height = v + 'px';
+	    }).on('done', function () {
+	      shouldGrow = !shouldGrow;
+	      isRunning = false;
+	    }).begin();
+	    isRunning = true;
+	  }
 	};
 
 	var countUp = document.querySelector('#count-up');
@@ -98,10 +105,20 @@
 	};
 
 	var jump = document.querySelector('#jump-button');
+	var footer = document.querySelector('footer');
 	jump.onclick = function () {
 	  new _tweezer2.default({
 	    start: window.scrollY,
-	    end: document.body.clientHeight - window.innerHeight
+	    end: footer.getBoundingClientRect().top + window.scrollY
+	  }).on('tick', function (v) {
+	    return window.scrollTo(0, v);
+	  }).begin();
+	};
+
+	document.querySelector('#jump-to-top').onclick = function () {
+	  new _tweezer2.default({
+	    start: window.scrollY,
+	    end: 0
 	  }).on('tick', function (v) {
 	    return window.scrollTo(0, v);
 	  }).begin();
