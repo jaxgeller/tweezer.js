@@ -53,12 +53,11 @@ let moveAcrossScreen = document.querySelector('#move-across-screen')
 let moveAcrossScreenButton = document.querySelector('#move-across-screen-button')
 let shouldMove = true
 let isMoving = false
-let leftEdge = window.innerWidth - moveAcrossScreen.getBoundingClientRect().left
 function move(shouldMove) {
   if (shouldMove) {
     return {
       start: 0,
-      end:  leftEdge - moveAcrossScreen.getBoundingClientRect().width
+      end:  window.innerWidth - moveAcrossScreen.getBoundingClientRect().left - moveAcrossScreen.getBoundingClientRect().width
     }
   }
   else {
