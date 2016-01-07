@@ -5,6 +5,7 @@ export default class Tweezer {
     this.start = opts.start
     this.end = opts.end
 
+    this.frame = null
     this.next = null
     this.isRunning = false
     this.events = {}
@@ -13,8 +14,14 @@ export default class Tweezer {
 
   begin () {
     if (!this.isRunning && this.next !== this.end) {
-      requestAnimationFrame(this._tick.bind(this))
+      this.frame = requestAnimationFrame(this._tick.bind(this))
     }
+  }
+
+  stop () {
+    cancelAnimationFrame(this.frame)
+    this.isRunning = false
+    this.frame = null
   }
 
   on (name, handler) {
@@ -37,7 +44,7 @@ export default class Tweezer {
     this.emit('tick', this.next)
 
     if (this._shouldTick()) {
-      return requestAnimationFrame(this._tick.bind(this))
+      this.frame = requestAnimationFrame(this._tick.bind(this))
     } else {
       this.emit('done', null)
       this.isRunning = false
