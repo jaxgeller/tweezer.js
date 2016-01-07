@@ -96,12 +96,11 @@
 	var moveAcrossScreenButton = document.querySelector('#move-across-screen-button');
 	var shouldMove = true;
 	var isMoving = false;
-	var leftEdge = window.innerWidth - moveAcrossScreen.getBoundingClientRect().left;
 	function move(shouldMove) {
 	  if (shouldMove) {
 	    return {
 	      start: 0,
-	      end: leftEdge - moveAcrossScreen.getBoundingClientRect().width
+	      end: window.innerWidth - moveAcrossScreen.getBoundingClientRect().left - moveAcrossScreen.getBoundingClientRect().width
 	    };
 	  } else {
 	    return {
