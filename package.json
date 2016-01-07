@@ -1,6 +1,6 @@
 {
   "name": "tweezer.js",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "A small, dependency-free, ES6 tweening library for smooth animations",
   "main": "build/tweezer.js",
   "dependencies": {},
@@ -22,7 +22,7 @@
   },
   "standard": {
     "parser": "babel-eslint",
-    "globals": [ "requestAnimationFrame"]
+    "globals": [ "requestAnimationFrame", "cancelAnimationFrame"]
   },
   "repository": {
     "type": "git",

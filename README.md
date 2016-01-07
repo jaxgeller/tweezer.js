@@ -40,6 +40,7 @@ new Tweezer({
 .on('done', ()=> {
   // all done
 })
+.stop() // this stops the tweening
 .begin() // this fires the tweening
 ```
 
@@ -164,6 +165,10 @@ new Tweezer({
 ### Begin the Tween
 
 To start tweening, just run the `begin()` method.
+
+### Stopping the Tween
+
+If you'd like to stop tweening for whatever reason, call the `stop` method. This will reset everything and cancel the animation frame from firing.
 
 ## Browser Support
 

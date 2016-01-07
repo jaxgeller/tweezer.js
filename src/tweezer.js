@@ -16,12 +16,16 @@ export default class Tweezer {
     if (!this.isRunning && this.next !== this.end) {
       this.frame = requestAnimationFrame(this._tick.bind(this))
     }
+    return this
   }
 
   stop () {
     cancelAnimationFrame(this.frame)
     this.isRunning = false
     this.frame = null
+    this.timeStart = null
+    this.next = null
+    return this
   }
 
   on (name, handler) {
@@ -38,23 +42,26 @@ export default class Tweezer {
   _tick (currentTime) {
     this.isRunning = true
 
+    let lastTick = this.next || this.start
+
     if (!this.timeStart) this.timeStart = currentTime
     this.timeElapsed = currentTime - this.timeStart
     this.next = Math.round(this.ease(this.timeElapsed, this.start, this.end - this.start, this.duration))
-    this.emit('tick', this.next)
 
-    if (this._shouldTick()) {
+    if (this._shouldTick(lastTick)) {
+      this.emit('tick', this.next)
       this.frame = requestAnimationFrame(this._tick.bind(this))
     } else {
+      this.emit('tick', this.end)
+      this.stop()
       this.emit('done', null)
-      this.isRunning = false
     }
   }
 
-  _shouldTick () {
+  _shouldTick (lastTick) {
     return {
-      up: this.next < this.end,
-      down: this.next > this.end
+      up: this.next < this.end && lastTick <= this.next,
+      down: this.next > this.end && lastTick >= this.next
     }[this.direction]
   }
 
