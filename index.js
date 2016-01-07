@@ -1,17 +1,31 @@
 import Tweezer from 'tweezer.js'
 import {easeInOutQuad, easeOutBounce} from 'ez.js'
 
-
 let animatedHeight = document.querySelector('#animate-height')
-let animateHeightButton = document.querySelector('#animate-height-button')
-let a = new Tweezer({
-  start: animatedHeight.getBoundingClientRect().height,
-  end: animatedHeight.getBoundingClientRect().height * 3
-})
-.on('tick', v=> animatedHeight.style.height = v +'px')
-.on('done', ()=> animatedHeight.textContent = "All done!")
+let shouldGrow = true
+let isRunning = false
+function grow(b) {
+  if (b)
+    return animatedHeight.getBoundingClientRect().height * 3
+  else
+    return animatedHeight.getBoundingClientRect().height / 3
+}
 
-animateHeightButton.onclick = function(){a.begin()}
+document.querySelector('#animate-height-button').onclick = () => {
+  if (!isRunning) {
+    new Tweezer({
+      start: animatedHeight.getBoundingClientRect().height,
+      end: grow(shouldGrow)
+    })
+    .on('tick', v=> animatedHeight.style.height = v +'px')
+    .on('done', ()=> {
+      shouldGrow = !shouldGrow
+      isRunning = false
+    })
+    .begin()
+    isRunning = true
+  }
+}
 
 
 let countUp = document.querySelector('#count-up')
