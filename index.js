@@ -1,5 +1,4 @@
 import Tweezer from 'tweezer.js'
-import {easeInOutQuad, easeOutBounce} from 'ez.js'
 
 let animatedHeight = document.querySelector('#animate-height')
 let shouldGrow = true
@@ -42,8 +41,7 @@ let moveAcrossScreen = document.querySelector('#move-across-screen')
 let moveAcrossScreenButton = document.querySelector('#move-across-screen-button')
 let m = new Tweezer({
   start: 0,
-  end: window.innerWidth - moveAcrossScreen.getBoundingClientRect().left -moveAcrossScreen.getBoundingClientRect().width,
-  easing: easeOutBounce
+  end: window.innerWidth - moveAcrossScreen.getBoundingClientRect().left -moveAcrossScreen.getBoundingClientRect().width
 }).on('tick', v=> moveAcrossScreen.style.transform = 'translateX('+v +'px)')
 
 moveAcrossScreenButton.onclick = function(){m.begin()}
