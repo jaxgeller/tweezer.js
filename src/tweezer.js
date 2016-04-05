@@ -1,7 +1,7 @@
 export default class Tweezer {
   constructor (opts = {}) {
     this.duration = opts.duration || 1000
-    this.ease = opts.easing || this._defaultEase
+    this.ease = opts.easing || defaultEase
     this.start = opts.start
     this.end = opts.end
 
@@ -9,12 +9,13 @@ export default class Tweezer {
     this.next = null
     this.isRunning = false
     this.events = {}
-    this.direction = this.start < this.end ? 'up' : 'down'
+    this._tick = this._tick.bind(this)
+    this._shouldTick = this.start < this.end ? shouldTickUp : shouldTickDown
   }
 
   begin () {
     if (!this.isRunning && this.next !== this.end) {
-      this.frame = requestAnimationFrame(this._tick.bind(this))
+      this.frame = requestAnimationFrame(this._tick)
     }
     return this
   }
@@ -29,43 +30,44 @@ export default class Tweezer {
   }
 
   on (name, handler) {
-    this.events[name] = this.events[name] || []
-    this.events[name].push(handler)
+    const e = this.events[name]
+    if (e) e.push(handler)
+    else this.events[name] = [handler]
     return this
   }
 
   emit (name, val) {
-    let e = this.events[name]
-    e && e.forEach(handler => handler.call(this, val))
+    const e = this.events[name]
+    if (e) e.forEach(handler => handler.call(this, val))
+    return this
   }
 
   _tick (currentTime) {
     this.isRunning = true
-
-    let lastTick = this.next || this.start
+    const lastTick = this.next === null ? this.start : this.next // this.next can be 0
 
     if (!this.timeStart) this.timeStart = currentTime
     this.timeElapsed = currentTime - this.timeStart
     this.next = Math.round(this.ease(this.timeElapsed, this.start, this.end - this.start, this.duration))
 
     if (this._shouldTick(lastTick)) {
-      this.emit('tick', this.next)
-      this.frame = requestAnimationFrame(this._tick.bind(this))
+      this.emit('tick', this.next).frame = requestAnimationFrame(this._tick)
     } else {
-      this.emit('tick', this.end)
-      this.emit('done', null)
+      this.emit('tick', this.end).emit('done', null)
     }
   }
+}
 
-  _shouldTick (lastTick) {
-    return {
-      up: this.next < this.end && lastTick <= this.next,
-      down: this.next > this.end && lastTick >= this.next
-    }[this.direction]
-  }
+function defaultEase (t, b, c, d) {
+  return (t /= d / 2) < 1
+    ? c / 2 * t * t + b
+    : -c / 2 * ((--t) * (t - 2) - 1) + b
+}
 
-  _defaultEase (t, b, c, d) {
-    if ((t /= d / 2) < 1) return c / 2 * t * t + b
-    return -c / 2 * ((--t) * (t - 2) - 1) + b
-  }
+function shouldTickUp (lastTick) {
+  return this.next < this.end && lastTick <= this.next
+}
+
+function shouldTickDown (lastTick) {
+  return this.next > this.end && lastTick >= this.next
 }
