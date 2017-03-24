@@ -22,7 +22,7 @@ Two parameters are required to start Tweezer, a `start` and an `end` value, the 
 
 Below are all of the default configuration options. Note: **all methods can be chained.**
 
-```es6
+```javascript
 import Tweezer from 'tweezer.js'
 
 new Tweezer({
@@ -48,7 +48,7 @@ new Tweezer({
 
 ##### Add a Tweened Count Up Button
 
-```es6
+```javascript
 let countUpText = document.querySelector('#count-up')
 let countUpButton = document.querySelector('#count-up-button')
 
@@ -64,7 +64,7 @@ countUpButton.onclick = ()=> {
 
 ##### Smooth Scroll to an Element
 
-```es6
+```javascript
 let button = document.querySelector('#jump-button')
 let elementYouWantToScrollTo = document.querySelector('#element')
 
@@ -83,7 +83,7 @@ which will yield the document Y position of the element.
 
 ##### Move an Element Across the Screen
 
-```es6
+```javascript
 let mover = document.querySelector('#move-across-screen')
 let moverButton = document.querySelector('#move-across-screen-button')
 
@@ -105,7 +105,7 @@ Tweezer only has a couple of options, but these options can be very powerful. Ag
 
 ### Start and End
 
-```es6
+```javascript
 new Tweezer({
   start: 0,
   end: 9000
@@ -116,7 +116,7 @@ These are integers that define a start of tween and an end of tween. `start` can
 
 ### Easings
 
-```es6
+```javascript
 new Tweezer({
   easing: (t, b, c, d) => {
     if ((t/=d/2) < 1) return c/2*t*t + b
@@ -142,7 +142,7 @@ To handle events, use the `.on(handlerName, callback)` method.
 
 This is where you'll do the bulk of animation by handling the values return by Tweezer. With these values you can do anything like transforming and manipulating DOM elements.It will fire every 16ms via `requestAnimationFrame`.
 
-```es6
+```javascript
 new Tweezer({
   start: 0,
   end: 9000
@@ -154,7 +154,7 @@ new Tweezer({
 
 This event fires when tweening has reached the `end` value.  All tweening is complete when this event is fired.
 
-```es6
+```javascript
 new Tweezer({
   start: 0,
   end: 9000
