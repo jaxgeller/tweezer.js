@@ -6,7 +6,7 @@
   "module":      "dist/tweezer.module.js",
   "jsnext:main": "dist/tweezer.module.js",
 
-  "version": "1.3.2",
+  "version": "1.4.0",
   "license": "MIT",
 
   "repository": "jaxgeller/tweezer.js",
