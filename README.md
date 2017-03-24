@@ -1,6 +1,6 @@
 # Tweezer.js
 
-[![Tweezer.js on NPM](https://img.shields.io/npm/v/tweezer.js.svg)](https://www.npmjs.com/package/tweezer.js)
+[![Tweezer.js on NPM](https://img.shields.io/npm/v/tweezer.js.svg?style=flat-square)](https://www.npmjs.com/package/tweezer.js) [![Tweezer.js Downloads on NPM](https://img.shields.io/npm/dm/tweezer.js.svg?style=flat-square)](https://www.npmjs.com/package/tweezer.js) [![Standard JavaScript Style](https://img.shields.io/badge/code_style-standard-brightgreen.svg?style=flat-square)](http://standardjs.com/)
 
 A small, dependency-free, ES6 library for smooth animations. [Demo](http://jaxgeller.com/tweezer.js/).
 
