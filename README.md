@@ -194,6 +194,6 @@ A tween is when you animate something with some kind of [easing](http://easings.
 
 ## License
 
-[MIT](https://github.com/jaxgeller/tweezer.js/blob/master/LICENSE)
+[MIT](https://github.com/jaxgeller/tweezer.js/blob/master/LICENSE). © 2017 Jackson Geller
 
 [![Built With Love](http://forthebadge.com/images/badges/built-with-love.svg)](http://forthebadge.com)
