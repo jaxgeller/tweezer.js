@@ -1,33 +1,27 @@
 {
-  "name":        "tweezer.js",
+  "name": "tweezer.js",
   "description": "A small, dependency-free, ES6 tweening library for smooth animations",
-
-  "main":        "dist/tweezer.js",
-  "module":      "dist/tweezer.module.js",
+  "main": "dist/tweezer.js",
+  "module": "dist/tweezer.module.js",
   "jsnext:main": "dist/tweezer.module.js",
-
   "version": "1.4.0",
   "license": "MIT",
-
   "repository": "jaxgeller/tweezer.js",
-
   "author": {
-    "name":  "Jackson Geller",
+    "name": "Jackson Geller",
     "email": "jacksongeller@gmail.com",
-    "url":   "https://jaxgeller.com/"
+    "url": "https://jaxgeller.com/"
   },
-
   "scripts": {
-    "build":      "rollup -c",
-    "dev":        "rollup -c -w -m inline",
-    "lint":       "eslint src",
-    "prebuild":   "rm -rf dist",
+    "build": "rollup -c",
+    "dev": "rollup -c -w -m inline",
+    "lint": "eslint src",
+    "prebuild": "rm -rf dist",
     "prepublish": "npm run test",
-    "pretest":    "npm run build",
-    "server":     "python -m SimpleHTTPServer 3000",
-    "test":       "npm run lint"
+    "pretest": "npm run build",
+    "server": "python -m SimpleHTTPServer 3000",
+    "test": "npm run lint"
   },
-
   "keywords": [
     "tweezer",
     "smooth scroll",
@@ -35,7 +29,6 @@
     "counter",
     "easing"
   ],
-
   "devDependencies": {
     "babel-eslint": "^7.1.1",
     "babel-preset-env": "^1.2.2",
