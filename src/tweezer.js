@@ -1,4 +1,4 @@
-export default class Tweezer {
+class Tweezer {
   constructor (opts = {}) {
     this.duration = opts.duration || 1000
     this.ease = opts.easing || this._defaultEase
@@ -14,13 +14,13 @@ export default class Tweezer {
 
   begin () {
     if (!this.isRunning && this.next !== this.end) {
-      this.frame = requestAnimationFrame(this._tick.bind(this))
+      this.frame = window.requestAnimationFrame(this._tick.bind(this))
     }
     return this
   }
 
   stop () {
-    cancelAnimationFrame(this.frame)
+    window.cancelAnimationFrame(this.frame)
     this.isRunning = false
     this.frame = null
     this.timeStart = null
@@ -50,7 +50,7 @@ export default class Tweezer {
 
     if (this._shouldTick(lastTick)) {
       this.emit('tick', this.next)
-      this.frame = requestAnimationFrame(this._tick.bind(this))
+      this.frame = window.requestAnimationFrame(this._tick.bind(this))
     } else {
       this.emit('tick', this.end)
       this.emit('done', null)
@@ -69,3 +69,5 @@ export default class Tweezer {
     return -c / 2 * ((--t) * (t - 2) - 1) + b
   }
 }
+
+export default Tweezer
