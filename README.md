@@ -149,9 +149,9 @@ new Tweezer({
     })
 })
 .on('tick', ([v1, v2, v3]) => {
-  el1.style.top = v1;
-  el2.style.top = v2;
-  el3.style.top = v3;
+    el1.style.top = v1;
+    el2.style.top = v2;
+    el3.style.top = v3;
 })
 .begin()
 ```
