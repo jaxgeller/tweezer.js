@@ -134,6 +134,28 @@ c: change in value,
 d: duration
 ```
 
+### Tweeners
+
+By setting the `start` and `end` properties, Tweezer uses a default tweener that simply tweens directly from `start` to `end`.  This behavior can be overridden by explicitly specifying a `tweener` in the config instead.  There is only one alternate tweener currently, called `MultiTweener`.  This tweener allows you to tween several different values simultaneously and in sync.
+
+```javascript
+import Tweezer from 'tweezer.js'
+import { MultiTweener } from 'tweezer.js/dist/multi-tweener'
+
+new Tweezer({
+    tweener: new MultiTweener({
+        starts: [0, 500, -100],
+        ends: [50, 400, 0]
+    })
+})
+.on('tick', ([v1, v2, v3]) => {
+  el1.style.top = v1;
+  el2.style.top = v2;
+  el3.style.top = v3;
+})
+.begin()
+```
+
 ### Using the Emitter
 
 To handle events, use the `.on(handlerName, callback)` method.

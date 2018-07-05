@@ -26,8 +26,8 @@
       // multi-counter
         const tween = new Tweezer({
           tweener: new TweezerTweener.MultiTweener({
-            starts: [0, 100],
-            ends: [100, 500]
+            starts: [-100, 0, 1],
+            ends: [100, 1000, 2]
           })
         })
           .on('tick', value => console.log(value))
