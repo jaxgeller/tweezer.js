@@ -20,6 +20,17 @@
         .on('tick', value => console.log(value))
         .on('done', () => console.log('Tween done.'))
         .begin()
+
+      setTimeout(() => {
+      // multi-counter
+        const tween = new Tweezer({
+          starts: [0, 100],
+          ends: [100, 500]
+        })
+          .on('tick', value => console.log(value))
+          .on('done', () => console.log('Tween done.'))
+          .begin()
+      }, 2000)
     </script>
   </body>
 </html>

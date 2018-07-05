@@ -1,9 +1,15 @@
+
 class Tweezer {
   constructor (opts = {}) {
     this.duration = opts.duration || 1000
     this.ease = opts.easing || this._defaultEase
-    this.start = opts.start
-    this.end = opts.end
+    this.multi = Boolean(opts.starts)
+    this.starts = opts.starts || [opts.start]
+    this.ends = opts.ends || [opts.end]
+    const greatestDelta = this.starts.reduce((greatestDelta, start, i) => Math.max(greatestDelta, Math.abs(this.ends[i] - start)), 0)
+    this.start = 0
+    this.end = greatestDelta
+    this.decimal = opts.decimal || false
 
     this.frame = null
     this.next = null
@@ -46,13 +52,30 @@ class Tweezer {
 
     if (!this.timeStart) this.timeStart = currentTime
     this.timeElapsed = currentTime - this.timeStart
-    this.next = Math.round(this.ease(this.timeElapsed, this.start, this.end - this.start, this.duration))
+    this.next = this.ease(this.timeElapsed, this.start, this.end - this.start, this.duration)
 
     if (this._shouldTick(lastTick)) {
-      this.emit('tick', this.next)
+      const nexts = this.ends.map((end, i) => {
+        const start = this.starts[i]
+        const progress = (this.next - this.start) / (this.end - this.start)
+        let next = ((end - start) * progress) + start
+        if (!this.decimal) {
+          next = Math.round(next)
+        }
+        return next
+      })
+      if (this.multi) {
+        this.emit('tick', nexts)
+      } else {
+        this.emit('tick', nexts[0])
+      }
       this.frame = window.requestAnimationFrame(this._tick.bind(this))
     } else {
-      this.emit('tick', this.end)
+      if (this.multi) {
+        this.emit('tick', this.ends)
+      } else {
+        this.emit('tick', this.ends[0])
+      }
       this.emit('done', null)
     }
   }
