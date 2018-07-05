@@ -1,15 +1,12 @@
+import { SingleTweener } from './single-tweener'
 
-class Tweezer {
+export default class Tweezer {
   constructor (opts = {}) {
     this.duration = opts.duration || 1000
     this.ease = opts.easing || this._defaultEase
-    this.multi = Boolean(opts.starts)
-    this.starts = opts.starts || [opts.start]
-    this.ends = opts.ends || [opts.end]
-    const greatestDelta = this.starts.reduce((greatestDelta, start, i) => Math.max(greatestDelta, Math.abs(this.ends[i] - start)), 0)
-    this.start = 0
-    this.end = greatestDelta
-    this.decimal = opts.decimal || false
+    this.tweener = opts.tweener || new SingleTweener(opts)
+    this.start = this.tweener.start
+    this.end = this.tweener.end
 
     this.frame = null
     this.next = null
@@ -55,27 +52,10 @@ class Tweezer {
     this.next = this.ease(this.timeElapsed, this.start, this.end - this.start, this.duration)
 
     if (this._shouldTick(lastTick)) {
-      const nexts = this.ends.map((end, i) => {
-        const start = this.starts[i]
-        const progress = (this.next - this.start) / (this.end - this.start)
-        let next = ((end - start) * progress) + start
-        if (!this.decimal) {
-          next = Math.round(next)
-        }
-        return next
-      })
-      if (this.multi) {
-        this.emit('tick', nexts)
-      } else {
-        this.emit('tick', nexts[0])
-      }
+      this.emit('tick', this.tweener.getIntermediateValue(this.next))
       this.frame = window.requestAnimationFrame(this._tick.bind(this))
     } else {
-      if (this.multi) {
-        this.emit('tick', this.ends)
-      } else {
-        this.emit('tick', this.ends[0])
-      }
+      this.emit('tick', this.tweener.getFinalValue())
       this.emit('done', null)
     }
   }
@@ -92,5 +72,3 @@ class Tweezer {
     return -c / 2 * ((--t) * (t - 2) - 1) + b
   }
 }
-
-export default Tweezer

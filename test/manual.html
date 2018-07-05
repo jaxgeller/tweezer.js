@@ -8,6 +8,7 @@
   </head>
   <body>
     <script src="../dist/tweezer.js"></script>
+    <script src="../dist/multi-tweener.js"></script>
     <script>
       console.log('Module assigned to window.Tweezer. Logged below:')
       console.log(Tweezer)
@@ -24,8 +25,10 @@
       setTimeout(() => {
       // multi-counter
         const tween = new Tweezer({
-          starts: [0, 100],
-          ends: [100, 500]
+          tweener: new TweezerTweener.MultiTweener({
+            starts: [0, 100],
+            ends: [100, 500]
+          })
         })
           .on('tick', value => console.log(value))
           .on('done', () => console.log('Tween done.'))
