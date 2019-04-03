@@ -1,9 +1,12 @@
-class Tweezer {
+import { SingleTweener } from './single-tweener'
+
+export default class Tweezer {
   constructor (opts = {}) {
     this.duration = opts.duration || 1000
     this.ease = opts.easing || this._defaultEase
-    this.start = opts.start
-    this.end = opts.end
+    this.tweener = opts.tweener || new SingleTweener(opts)
+    this.start = this.tweener.start
+    this.end = this.tweener.end
 
     this.frame = null
     this.next = null
@@ -46,13 +49,13 @@ class Tweezer {
 
     if (!this.timeStart) this.timeStart = currentTime
     this.timeElapsed = currentTime - this.timeStart
-    this.next = Math.round(this.ease(this.timeElapsed, this.start, this.end - this.start, this.duration))
+    this.next = this.ease(this.timeElapsed, this.start, this.end - this.start, this.duration)
 
     if (this._shouldTick(lastTick)) {
-      this.emit('tick', this.next)
+      this.emit('tick', this.tweener.getIntermediateValue(this.next))
       this.frame = window.requestAnimationFrame(this._tick.bind(this))
     } else {
-      this.emit('tick', this.end)
+      this.emit('tick', this.tweener.getFinalValue())
       this.emit('done', null)
     }
   }
@@ -69,5 +72,3 @@ class Tweezer {
     return -c / 2 * ((--t) * (t - 2) - 1) + b
   }
 }
-
-export default Tweezer
