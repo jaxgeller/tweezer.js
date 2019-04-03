@@ -4,7 +4,7 @@
   "main": "dist/tweezer.js",
   "module": "dist/tweezer.module.js",
   "jsnext:main": "dist/tweezer.module.js",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "license": "MIT",
   "repository": "jaxgeller/tweezer.js",
   "author": {
