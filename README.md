@@ -2,7 +2,7 @@
 
 [![Tweezer.js on NPM](https://img.shields.io/npm/v/tweezer.js.svg?style=flat-square)](https://www.npmjs.com/package/tweezer.js) [![Tweezer.js Downloads on NPM](https://img.shields.io/npm/dm/tweezer.js.svg?style=flat-square)](https://www.npmjs.com/package/tweezer.js) [![Standard JavaScript Style](https://img.shields.io/badge/code_style-standard-brightgreen.svg?style=flat-square)](http://standardjs.com/)
 
-A small, dependency-free, ES6 library for smooth animations. [Demo](http://jaxgeller.com/tweezer.js/).
+A small, dependency-free, ES6 library for smooth animations. [Demo](https://tweezer-js-demo.stackblitz.io/).
 
 Tweezer.js is the last tweening library you'll ever need. It provides the building blocks for any animation, allowing you to construct beautiful animations simply and without the need of requiring lots of other dependencies like smoothScroll, countUp.js, and GSAP.
 
