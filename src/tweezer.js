@@ -37,7 +37,7 @@ export default class Tweezer {
     return this
   }
 
-  emit (name, val) {
+  _emit (name, val) {
     let e = this.events[name]
     e && e.forEach(handler => handler.call(this, val))
   }
@@ -52,11 +52,11 @@ export default class Tweezer {
     this.next = this.ease(this.timeElapsed, this.start, this.end - this.start, this.duration)
 
     if (this._shouldTick(lastTick)) {
-      this.emit('tick', this.tweener.getIntermediateValue(this.next))
+      this._emit('tick', this.tweener.getIntermediateValue(this.next))
       this.frame = window.requestAnimationFrame(this._tick.bind(this))
     } else {
-      this.emit('tick', this.tweener.getFinalValue())
-      this.emit('done', null)
+      this._emit('tick', this.tweener.getFinalValue())
+      this._emit('done', null)
     }
   }
 
